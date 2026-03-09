@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="external_layout_inherit" inherit_id="web.external_layout">
+            <xpath expr="//t[@t-out='0']" position="before">
+                <t t-set="name" t-value="o.name"/>
+                <t t-set="model_name" t-value="o._name"/>
+            </xpath>
+        </template>
+
+        <template id="custom_external_layout_standard"  inherit_id="web.external_layout_standard" >
+            <xpath expr="//div[1]" position="replace">
+                <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+                    <div class="row ">
+                        <div class="col-4 col-md-4">
+                            <img  t-att-src="image_data_uri(company.logo)"  class="img-fluid" alt="Logo"/>
+                        </div>
+                        <div class="col-8 col-md-8" style="margin-top: 40px;">
+                            <t t-if="model_name == 'account.move'">
+                                <h4 style="text-align: end;color:#3d58bc;">Invoice <span t-field="o.name"/></h4>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[3]" position="replace">
+                <div  t-attf-class="footer o_company_#{company.id}_layout {{report_type != 'pdf' and 'mt-auto'}}">
+                    <div class="row ">
+                        <div class="col-9 col-md-9" style="padding-right: unset;padding-left: unset;">
+                            <img  t-att-src="image_data_uri(company.company_footer)" class="img-fluid" alt="Logo"/>
+                        </div>
+                        <div class="col-3 col-md-3">
+                            <img  t-att-src="image_data_uri(company.right_footer_logo)" class="img-fluid"  alt="Logo"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+        <template id="custom_report_invoice_template"  inherit_id="account.report_invoice_document" >
+            <xpath expr="//div[contains(@class, 'page')]"  position="inside">
+                <style type="text/css">   
+                    @font-face {
+                        font-family: 'SF-COMPACT';
+                        src: url('/custom_invoice_template/static/fonts/sf-compact/SF-Compact-Text-Thin.otf') format('truetype');
+                        font-weight: 100;
+                        font-style: 'normal';
+                    }
+                    body{
+                        font-family:SF-COMPACT;
+                        font-weight: 100 !important;
+                    }
+
+                </style>
+
+            </xpath>
+            <xpath expr="//div[1]"  position="after">
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-6 col-md-6">
+                        <p style="text-align: left !important;margin: 0 !important;font-weight: 600 !important;color: ##1c1b1b !important;font-size: 18px !important;"><span t-field="o.company_id.name"/></p>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.company_id.street"/></p>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.company_id.street2"/>.</p>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.company_id.city"/> <span t-field='o.company_id.state_id'/> <span t-field="o.company_id.zip"/></p>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.company_id.country_id"/></p>
+                        <br/>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a t-attf-href="tel:{{o.company_id.phone}}" style="color:black;">P:<span t-field="o.company_id.phone"/></a></p>
+                        <!-- <p t-if="o.ref" style="text-align: left !important;margin: 0;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a style="color:black;">Ref: <span t-field="o.ref"/></a></p> -->
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <p style="text-align: right !important;margin: 0 !important;font-weight: 600 !important;color: ##1c1b1b !important;font-size: 18px !important;"><span t-field="o.partner_id.name"/></p>
+                        <p style="text-align: right !important;margin: 0 !important;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.partner_id.street"/></p>
+                        <p style="text-align: right !important;margin: 0 !important;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.partner_id.street2"/></p>
+                        <p style="text-align: right !important;margin: 0 !important;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.partner_id.city"/> <span t-field='o.partner_id.state_id'/> <span t-field="o.partner_id.zip"/></p>
+                        <p style="text-align: right !important;margin: 0 !important;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.partner_id.country_id"/></p>
+                        <br/>
+                        <p style="text-align: right !important;margin: 0;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a t-attf-href="tel:{{o.partner_id.phone}}" style="color:black;">P:<span t-field="o.partner_id.phone"/></a></p>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[1]"  position="replace">
+                <address></address>
+            </xpath>
+            <xpath expr="//div[contains(@class, 'page')]/t[1]"  position="replace">
+            </xpath>
+            <xpath expr="//div[@id='informations']"  position="replace">
+
+                <div class="row " style="margin-top: 19px;background: #f3f4f6 !important;padding: 16px 0 16px 0;border-radius: 6px;margin-left: 0px;">
+                    <div class="col-4 col-md-4" style="">
+                        <span style="font-weight: 800 !important;">Ref:</span> <span  t-field="o.ref"/>
+                    </div>
+                    <div class="col-4 col-md-4">
+                        <span style="font-weight: 800 !important;">Invoice Date:</span> <span  t-field="o.invoice_date"/>
+                    </div>
+                    <div class="col-4 col-md-4">
+                        <span style="font-weight: 800 !important;">Due Date:</span> <span  t-field="o.invoice_date_due"/>
+                    </div>
+                </div>
+
+                <div id="informations" class="row mt32 mb32">
+                    <div class="col-7 col-md-7"> </div>
+                    <div class="col-5 col-md-5">
+                        <!-- <div class='row' t-if="o.invoice_date" name="invoice_date">
+                            <div class='col-6 col-md-6'>
+                                <p style="margin: 0 !important;text-align: right !important;font-weight: 500 !important;color: #373333!important;font-size: 14px !important;">Invoice Date:</p>
+                            </div>
+                            <div class='col-6 col-md-6'>
+                                <p style="margin: 0 !important;text-align: right !important;font-weight: 500 !important;color: #373333 !important;font-size: 14px !important;" class="m-0" t-field="o.invoice_date"/>
+                            </div>
+                        </div> -->
+                        <!-- <div class='row' t-if="o.invoice_date" name="invoice_date">
+                            <div class='col-6 col-md-6'>
+                                <p style="margin: 0 !important;text-align: right;font-weight: 500 !important;color: #373333 !important;font-size: 14px !important;">Due Date:</p>
+                            </div>
+                            <div class='col-6 col-md-6'>
+                                <p style="margin: 0 !important;text-align: right !important;font-weight: 500 !important;color: #373333 !important;font-size: 14px !important;" class="m-0" t-field="o.invoice_date_due" />
+                            </div>
+                        </div> -->
+                        <t t-set="payments_vals" t-value="o.sudo().invoice_payments_widget and o.sudo().invoice_payments_widget['content'] or []"/>
+                        <t t-foreach="payments_vals" t-as="payment_vals">
+                            <tr t-if="payment_vals['is_exchange'] == 0">
+                                <td>
+                                    <i class="oe_form_field text-end oe_payment_label">
+                                        <t t-if="payment_vals['is_refund']">Reversed on </t>
+                                        <t t-else="">Paid on </t>
+                                        <t t-out="payment_vals['date']" t-options='{"widget": "date"}'>2021-09-19</t>
+                                    </i>
+                                </td>
+                                <td class="text-end">
+                                    <span t-out="payment_vals['amount']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'>20.00</span>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-if="len(payments_vals) > 0">
+                            <div class='row' t-if="o.invoice_date" name="invoice_date">
+                                <div class='col-6 col-md-6'>
+                                    <p style="margin: 0 !important;text-align: right;font-weight: 500 !important;color: #373333 !important;font-size: 14px !important;">Amount Due:</p>
+                                </div>
+                                <div class='col-6 col-md-6'>
+                                    <p style="margin: 0 !important;text-align: right !important;font-weight: 500 !important;color: #373333 !important;font-size: 14px !important;" class="m-0" t-field="o.amount_residual" />
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <!-- <div class='row mb-5'>
+                    <div class='col-12 col-md-12'>
+                        <h2 style="color:#3d58bc;">Invoice <span t-field="o.name"/></h2>
+                    </div>
+                </div> -->
+            </xpath>
+
+            <xpath expr="//div[@id='payment_term']/div[4]"  position="replace">
+                <div class="mb-3" style="display:none;">
+                    <p name="payment_communication" >
+                        Payment Communication: <span class="fw-bold" t-field="o.payment_reference">INV/2023/00001</span>
+                        <t t-if="o.partner_bank_id">
+                            <br/> on this account: <span t-field="o.partner_bank_id" class="fw-bold"/>
+                        </t>
+                    </p>
+                </div>
+            </xpath>
+            <xpath expr="//div[@id='right-elements']"  position="replace">
+            </xpath>
+            <!-- <xpath expr="//div[@class='page']/p[1]"  position="replace">
+            </xpath>
+            <xpath expr="//div[@class='page']/p[1]"  position="replace">
+            </xpath>
+            <xpath expr="//div[@class='page']/p[1]"  position="replace">
+            </xpath>
+            <xpath expr="//div[@class='page']/p[1]"  position="replace">
+            </xpath> -->
+            
+            <xpath expr="//table[@name='invoice_line_table']"  position="replace">
+                <table class="o_has_total_table table-borderless table table-sm o_main_table mb-0" name="invoice_line_table">
+                    <thead>
+                        <tr>
+                            <th name="th_item" class="text-left" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 22% !important;padding: 10px !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Item</span></th>
+                            <th name="th_description" class="text-left" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 36%  !important;padding: 10px !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Description</span></th>
+                            <th name="th_quantity" class="text-center" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 10% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Qty</span></th>
+                            <th name="th_priceunit" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 14% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Price</span></th>
+                            <th name="th_subtotal" class="text-right" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 18% !important;padding: 10px !important;">
+                                <!-- <span style="font-size: 14px !important;font-weight: 800 !important;color: #242222 !important;">Amount</span> -->
+                                <span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Total Price</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="invoice_tbody">
+                        <t t-set="current_subtotal" t-value="0"/>
+                        <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                        <t t-set="row_num" t-value="0"/>
+                        <t t-foreach="lines" t-as="line">
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" />
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"/>
+                            <t t-set="row_num" t-value="row_num + 1"/>
+                            <tr t-att-style="'background-color:white;' if (row_num % 2) != 0 else 'background-color:#0055ff40;' " t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                <t name="account_invoice_line_accountable">
+                                    <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"><span t-field="line.product_id.name" t-options="{'widget': 'text'}"/></td>
+                                    <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left"><span t-field="line.name"/></td>
+                                    <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-center">      
+                                        <span t-field="line.quantity"/>
+                                        <span t-field="line.product_uom_id"  groups="uom.group_uom"/>
+                                    </td>
+                                    <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right"><span t-field="line.price_unit"/></td>
+                                    <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
+                                        <!-- <span class="text-nowrap" t-field="line.price_subtotal" /> -->
+                                        <span class="text-nowrap" t-field="line.price_total" />
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>  
+                        <tr t-att-style="'background-color:white;' if ((row_num + 1) % 2) != 0 else 'background-color:#0055ff40;' " >
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">Subtotal</td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span t-field="o.amount_untaxed"/></td>
+                        </tr>
+                        <tr t-att-style="'background-color:white;' if ((row_num + 2) % 2) != 0 else 'background-color:#0055ff40;' " >
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span style="font-weight: 900 !important;">Total</span></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span style="font-weight: 900 !important;" t-field="o.amount_total"/></td>
+                        </tr>
+                        <t t-set="payments_vals" t-value="o.sudo().invoice_payments_widget and o.sudo().invoice_payments_widget['content'] or []"/>
+                        <t t-set="total_payment" t-value="0"/>
+                        <t t-foreach="payments_vals" t-as="payment_vals">
+                            <t t-set="total_payment" t-value="total_payment + payment_vals['amount']"/>
+                        </t> 
+                        <tr t-att-style="'background-color:white;' if ((row_num + 3) % 2) != 0 else 'background-color:#0055ff40;' " >
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">Paid</td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span t-esc="total_payment" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                        </tr> 
+                        <tr t-att-style="'background-color:white;' if ((row_num + 4) % 2) != 0 else 'background-color:#0055ff40;' " >
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span style="font-weight: 900 !important;">Balance</span></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">
+                            <span style="font-weight: 900 !important;" t-field="o.amount_residual" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="border-top: 2px solid gray !important;"></div> 
+
+                <div style="width:100%font-size:13px;color:#555;margin-bottom: 70px !important;">
+                    <div style="background:#f2f2f2; padding:15px;">
+                        <div style="font-weight:bold; margin-bottom:6px;">Cheques Payment</div>
+                        <span t-raw="o.company_id.company_terms" />
+                        <div style="display:flex; margin-top:15px;">
+                            <div style="width:50%;">
+                                <div style="font-weight:bold;">Beneficiary Name (English)</div>
+                                <div><span t-field="o.partner_bank_id.acc_holder_name"></span></div>
+                            </div>
+                            <div style="width:50%;">
+                                <div style="font-weight:bold;">Beneficiary Name (Arabic)</div>
+                                <div><span t-field="o.partner_bank_id.beneficiary_ar"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background:#dcdcdc; padding:8px 15px; font-weight:bold; margin-top:10px;">
+                        WIRE Transfers
+                    </div>
+                    <div style="padding:15px; display:flex;">
+                        <div style="width:33%;">
+                            <div style="font-weight:bold;">IBAN</div>
+                            <div><span t-field="o.partner_bank_id.iban"></span></div>
+                            <div style="font-weight:bold; margin-top:15px;">SWIFT</div>
+                            <div><span t-field="o.partner_bank_id.bank_id.bic"></span></div>
+                        </div>
+                        <div style="width:67%;">
+                            <div style="font-weight:bold;">Bank Address</div>
+                            <div>
+                                <p t-if="o.partner_bank_id.bank_id.bic" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">
+                                    <span t-if="o.partner_bank_id.bank_id.city" t-field="o.partner_bank_id.bank_id.city"></span>,
+                                    <span t-if="o.partner_bank_id.bank_id.name" t-field="o.partner_bank_id.bank_id.country.name"></span>,
+                                    <span t-if="o.partner_bank_id.bank_id.street2" t-field="o.partner_bank_id.bank_id.street2"></span>,
+                                    <span t-if="o.partner_bank_id.bank_id.street" t-field="o.partner_bank_id.bank_id.street"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+                <!-- <span t-raw="o.company_id.company_terms" />
+                <p t-if="o.partner_bank_id.acc_number" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">ACCOUNT NUMBER</p>
+                <p t-if="o.partner_bank_id.acc_number" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.acc_number"></span></p>
+                <p t-if="o.partner_bank_id.acc_holder_name" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">Beneficiary Name (ENGLISH)</p>
+                <p t-if="o.partner_bank_id.acc_holder_name" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.acc_holder_name"></span></p>
+                <p t-if="o.partner_bank_id.beneficiary_ar" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">Beneficiary Name (ARABIC)</p>
+                <p t-if="o.partner_bank_id.beneficiary_ar" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.beneficiary_ar"></span></p>
+                <p t-if="o.partner_bank_id.iban" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">IBAN</p>
+                <p t-if="o.partner_bank_id.iban" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.iban"></span></p>
+                <p t-if="o.partner_bank_id.bank_id.bic" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">Swift Code:</p>
+                <p t-if="o.partner_bank_id.bank_id.bic" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.bank_id.bic"></span></p>
+                <p t-if="o.partner_bank_id.bank_id.bic" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">Bank Address:</p>
+                <p t-if="o.partner_bank_id.bank_id.bic" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">
+                    <span t-if="o.partner_bank_id.bank_id.city" t-field="o.partner_bank_id.bank_id.city"></span>,
+                    <span t-if="o.partner_bank_id.bank_id.name" t-field="o.partner_bank_id.bank_id.country.name"></span>,
+                    <span t-if="o.partner_bank_id.bank_id.street2" t-field="o.partner_bank_id.bank_id.street2"></span>,
+                    <span t-if="o.partner_bank_id.bank_id.street" t-field="o.partner_bank_id.bank_id.street"></span>
+                </p> -->
+            </xpath>
+            <!-- <xpath expr="//div[@id='total']/div/table"  position="attributes"> 
+                <attribute name="style">display:none !important;</attribute>
+                <attribute name="class"></attribute>
+            </xpath>
+            <xpath expr="//div[@id='total']/div/table/tr[1]"  position="replace">
+                <span></span>
+            </xpath>
+             <xpath expr="//div[@id='total']/div/table/t[1]"  position="replace">
+                <span></span>
+            </xpath>
+            <xpath expr="//div[@id='total']/div/table/tr[1]"  position="replace">
+                <span></span>
+            </xpath> -->
+            <xpath expr="//div[contains(@id,'qrcode')]"  position="replace">
+                <div id="qrcode" style="display:none;">
+                    
+                </div>
+            </xpath>
+            <xpath expr="//div[contains(@id,'payment_link_qrcode')]"  position="replace">
+            </xpath>
+            
+        </template>
+
+        
+        
+    </data>
+</odoo> 

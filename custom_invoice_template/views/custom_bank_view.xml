@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="custom_bank_partner_view" model="ir.ui.view">
+            <field name="name">Custom bank partner view</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="account.view_partner_bank_form_inherit_account"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='acc_number']" position="before">
+                    <field name="account_name"/>
+                </xpath>
+                <xpath expr="//field[@name='acc_holder_name']" position="after">
+                    <field name="beneficiary_ar"/> 
+                    <field name="iban"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>   
