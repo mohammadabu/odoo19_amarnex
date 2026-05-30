@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Document Directory List View -->
+    <record id="view_document_directory_list" model="ir.ui.view">
+        <field name="name">document.directory.list</field>
+        <field name="model">document.directory</field>
+        <field name="arch" type="xml">
+            <list string="Document Directories">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="full_name"/>
+                <field name="parent_directory_id"/>
+                <field name="linked_model_id"/>
+                <field name="file_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Document Directory Form View -->
+    <record id="view_document_directory_form" model="ir.ui.view">
+        <field name="name">document.directory.form</field>
+        <field name="model">document.directory</field>
+        <field name="arch" type="xml">
+            <form string="Document Directory">
+                <sheet>
+                    <!-- Added groups to button for admin access only -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_files" 
+                                type="object" 
+                                class="oe_stat_button" 
+                                icon="fa-file-text-o"
+                                groups="ais_document_management.group_document_administrator"
+                                invisible="file_count == 0">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="file_count"/></span>
+                                <span class="o_stat_text">Files</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Finance"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="parent_directory_id"/>
+                            <field name="linked_model_id"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sub Directories">
+                            <!-- Updated list to list -->
+                            <field name="child_directory_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="file_count"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Files" groups="ais_document_management.group_document_administrator">
+                            <!-- Updated list to list -->
+                            <field name="file_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="create_date"/>
+                                    <field name="responsible_user_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Updated view_mode list to list -->
+    <!-- Document Directory Action -->
+    <record id="action_document_directory" model="ir.actions.act_window">
+        <field name="name">Directories</field>
+        <field name="res_model">document.directory</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new directory
+            </p>
+            <p>
+                Organize your documents in hierarchical directories for better management.
+            </p>
+        </field>
+    </record>
+    
+    <!-- Document Directory Search View -->
+    <record id="view_document_directory_search" model="ir.ui.view">
+        <field name="name">document.directory.search</field>
+        <field name="model">document.directory</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="linked_model_id"/>
+                <field name="parent_directory_id"/>
+                <filter string="Parent Directory" name="group_by_parent" domain="[]" context="{'group_by': 'parent_directory_id'}"/>
+            </search>
+        </field>
+    </record>
+</odoo>

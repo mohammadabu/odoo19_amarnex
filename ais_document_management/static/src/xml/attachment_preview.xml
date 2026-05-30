@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Add preview button to binary fields on attachment forms -->
+    <t t-inherit="web.BinaryField" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o_select_file_button')]" position="after">
+            
+            <t t-if="props.name and props.record.resModel == 'ir.attachment'">
+                <button
+                    class="btn btn-secondary fa fa-eye o_attachment_preview_btn"
+                    data-tooltip="Preview Document"
+                    aria-label="Preview Document"
+                    t-on-click="_onDocumentPreview"/>
+            </t>            
+        </xpath>
+    </t>
+
+</templates>

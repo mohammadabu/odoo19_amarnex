@@ -1,0 +1,163 @@
+/* Preview button styling */
+.o_attachment_preview_btn {
+  margin-left: 4px !important;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.o_attachment_preview_btn:hover {
+  background-color: #0d6efd !important;
+  color: white !important;
+  transform: scale(1.05);
+}
+
+/* Share button container */
+.ais_document_share_container {
+  position: fixed;
+  top: 200px;
+  right: 20px;
+  z-index: 1000;
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.ais_document_share_container .btn {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.ais_document_share_container .btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Document management interface enhancements */
+.o_form_sheet .o_field_many2many_tags {
+  margin-bottom: 8px;
+}
+
+.document_directory_badge {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.document_label_tag {
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px;
+}
+
+/* Attachment list view enhancements */
+.o_list_view .o_data_row:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+/* File type icons styling */
+.o_field_binary_file .o_input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Wizard dialog styling */
+.o_dialog .o_form_view {
+  padding: 16px;
+}
+
+.o_dialog .o_form_sheet {
+  max-width: 100%;
+}
+
+/* Security token display */
+.security_token_field {
+  font-family: "Courier New", monospace;
+  background-color: #f8f9fa;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+/* Download link styling */
+.download_link_display {
+  background-color: #e7f3ff;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid #0d6efd;
+  margin: 8px 0;
+}
+
+.download_link_display a {
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.download_link_display a:hover {
+  text-decoration: underline;
+}
+
+/* Version history timeline */
+.version_history_item {
+  position: relative;
+  padding-left: 24px;
+  padding-bottom: 16px;
+}
+
+.version_history_item::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  bottom: -10px;
+  width: 2px;
+  background-color: #dee2e6;
+}
+
+.version_history_item::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #0d6efd;
+  border: 2px solid white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ais_document_share_container {
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .ais_document_share_container .btn span {
+    display: none;
+  }
+}

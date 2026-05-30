@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Updated sequence with year prefix like reference file -->
+        <record id="seq_attachment_reference_code" model="ir.sequence">
+            <field name="name">Document Attachment</field>
+            <field name="code">attachment.reference.code</field>
+            <field name="prefix">DOC/%(year)s/</field>
+            <field name="padding">4</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

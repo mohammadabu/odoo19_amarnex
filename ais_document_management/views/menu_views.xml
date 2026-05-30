@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Added groups attribute to all menuitems for access control -->
+    
+    <!-- Main Menu -->
+    <menuitem id="menu_ais_document_management_root"
+              name="Documents"
+              sequence="10"
+              groups="ais_document_management.group_document_standard_user"
+              web_icon="ais_document_management,static/description/icon.png"/>
+
+    <!-- Documents Submenu -->
+    <menuitem id="menu_documents_main"
+              name="Documents"
+              parent="menu_ais_document_management_root"
+              groups="ais_document_management.group_document_standard_user"
+              sequence="10"/>
+
+    <!-- Updated to use our custom action instead of base.action_attachment -->
+    <menuitem id="menu_all_documents"
+              name="All Documents"
+              parent="menu_documents_main"
+              action="action_attachment_enhanced"
+              groups="ais_document_management.group_document_standard_user"
+              sequence="10"/>
+
+    <!-- Configuration Submenu -->
+    <menuitem id="menu_documents_configuration"
+              name="Configuration"
+              parent="menu_ais_document_management_root"
+              groups="ais_document_management.group_document_standard_user"
+              sequence="100"/>
+
+    <menuitem id="menu_document_directories"
+              name="Directories"
+              parent="menu_documents_configuration"
+              action="action_document_directory"
+              groups="ais_document_management.group_document_standard_user"
+              sequence="9"/>
+
+    <menuitem id="menu_label_groups"
+              name="Label Groups"
+              parent="menu_documents_configuration"
+              action="action_document_label_group"
+              groups="ais_document_management.group_document_standard_user"
+              sequence="10"/>
+
+    <menuitem id="menu_labels"
+              name="Labels"
+              parent="menu_documents_configuration"
+              action="action_document_label"
+              groups="ais_document_management.group_document_standard_user"
+              sequence="20"/>
+</odoo>

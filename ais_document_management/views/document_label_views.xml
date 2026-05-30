@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Document Label Group List View -->
+    <record id="view_document_label_group_list" model="ir.ui.view">
+        <field name="name">document.label.group.list</field>
+        <field name="model">document.label.group</field>
+        <field name="arch" type="xml">
+            <list string="Label Groups" default_order="sequence">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="directory_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Document Label Group Form View -->
+    <record id="view_document_label_group_form" model="ir.ui.view">
+        <field name="name">document.label.group.form</field>
+        <field name="model">document.label.group</field>
+        <field name="arch" type="xml">
+            <form string="Label Group">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Status"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="directory_id" required="1"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="label_ids"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Added search view for label groups -->
+    <record id="view_document_label_group_search" model="ir.ui.view">
+        <field name="name">document.label.group.search</field>
+        <field name="model">document.label.group</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="label_ids"/>
+                <field name="directory_id"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Document Label List View -->
+    <record id="view_document_label_list" model="ir.ui.view">
+        <field name="name">document.label.list</field>
+        <field name="model">document.label</field>
+        <field name="arch" type="xml">
+            <list string="Labels" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name" placeholder="Create a label..."/>
+                <field name="label_group_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Document Label Form View -->
+    <record id="view_document_label_form" model="ir.ui.view">
+        <field name="name">document.label.form</field>
+        <field name="model">document.label</field>
+        <field name="arch" type="xml">
+            <form string="Label">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="label_group_id"/>
+                        </group>
+                        <group>
+                            <field name="directory_id"/>
+                            <field name="color_index" widget="color_picker"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Added search view for labels -->
+    <record id="view_document_label_search" model="ir.ui.view">
+        <field name="name">document.label.search</field>
+        <field name="model">document.label</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Label"/>
+                <field name="label_group_id"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Updated Label Group Action with view_ids specification -->
+    <record id="action_document_label_group" model="ir.actions.act_window">
+        <field name="name">Label Groups</field>
+        <field name="res_model">document.label.group</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('ais_document_management.view_document_label_group_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('ais_document_management.view_document_label_group_form')})]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new Label Group
+            </p>
+        </field>
+    </record>
+
+    <!-- Label Action -->
+    <record id="action_document_label" model="ir.actions.act_window">
+        <field name="name">Labels</field>
+        <field name="res_model">document.label</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new Label
+            </p>
+        </field>
+    </record>
+</odoo>

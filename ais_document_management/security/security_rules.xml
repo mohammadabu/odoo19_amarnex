@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate='0'>
+        
+        <!-- Define module category for document management -->
+        <record id="module_category_ais_document_mgmt" model="ir.module.category">
+            <field name="name">Document Management</field>
+            <field name="description">Manage document directories, labels, and file organization</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <!-- Create privilege group for document management -->
+        <record id="res_groups_privilege_ais_document_mgmt" model="res.groups.privilege">
+            <field name="name">Documents</field>
+            <field name="sequence">25</field>
+            <field name="category_id" ref="ais_document_management.module_category_ais_document_mgmt"/>
+        </record>
+
+        <!-- Standard User group with base access -->
+        <record id="group_document_standard_user" model="res.groups">
+            <field name="name">Document User</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="privilege_id" ref="ais_document_management.res_groups_privilege_ais_document_mgmt"/>
+            <field name="comment">Can view and manage own documents</field>
+        </record>
+        
+        <!-- Administrator group with full access -->
+        <record id="group_document_administrator" model="res.groups">
+            <field name="name">Document Administrator</field>
+            <field name="implied_ids" eval="[(4, ref('ais_document_management.group_document_standard_user'))]"/>
+            <field name="privilege_id" ref="ais_document_management.res_groups_privilege_ais_document_mgmt"/>
+            <field name="comment">Can manage all documents across the system</field>
+        </record>
+
+        <!-- Record rule: Standard users can only see their own attachments -->
+        <record id="ir_attachment_standard_user_access_rule" model="ir.rule">
+            <field name="name">Attachment Access: Own Documents Only</field>
+            <field name="model_id" ref="base.model_ir_attachment"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_document_standard_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Record rule: Administrators can see all attachments -->
+        <record id="ir_attachment_administrator_access_rule" model="ir.rule">
+            <field name="name">Attachment Access: All Documents</field>
+            <field name="model_id" ref="base.model_ir_attachment"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('group_document_administrator'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>

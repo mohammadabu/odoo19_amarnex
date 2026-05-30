@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit and extend base attachment list view -->
+    <record id="view_attachment_enhanced_list" model="ir.ui.view">
+        <field name="name">ir.attachment.enhanced.list</field>
+        <field name="model">ir.attachment</field>
+        <field name="arch" type="xml">
+            <list string="Attachments" multi_edit="1">
+                <field name="name"/>
+                <field name="directory_id"/>
+                <field name="revision_number"/>
+                <field name="reference_code"/>
+                <field name="label_ids" widget="many2many_tags" options="{'color_field': 'color_index'}"/>
+                <field name="responsible_user_id"/>
+                <field name="contact_id"/>
+                <field name="file_size" widget="integer"/>
+                <field name="create_date"/>
+                <field name="create_uid"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Inherit and extend base attachment form view -->
+    <record id="view_attachment_enhanced_form" model="ir.ui.view">
+        <field name="name">ir.attachment.enhanced.form</field>
+        <field name="model">ir.attachment</field>
+        <field name="arch" type="xml">
+            <form string="Attachments">
+                <header>
+                    <button
+                        name="action_send_by_email"
+                        string="Send by Email"
+                        type="object"
+                        class="oe_highlight"
+                        groups="ais_document_management.group_document_standard_user"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button"
+                                type="action"
+                                name="%(ais_document_management.action_attachment_share_wizard)d"
+                                icon="fa-share-alt"
+                                context="{'active_id': id, 'active_model': 'ir.attachment', 'default_res_id': id}"
+                                groups="ais_document_management.group_document_standard_user">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Share</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <label for="name"/>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+
+                    <h3 invisible="reference_code == 'New'">
+                        <field name="reference_code"/>
+                    </h3>
+
+                    <h3 invisible="revision_number == 0">
+                        <span>Revision - <field name="revision_number"/></span>
+                    </h3>
+
+                    <group>
+                        <group class="w-100">
+                            <field name="type"/>
+                            <label for="datas" class="mt-1" invisible="type == 'url'"/>
+                            <field name="datas" nolabel="1" class="w-100"
+                                filename="name" invisible="type == 'url'"/>
+                            <field name="url" widget="url" invisible="type == 'binary'"/>
+                            <field name="mimetype" groups="base.group_no_one"/>
+                        </group>
+
+                        <group string="Attached To" groups="base.group_no_one">
+                            <field name="res_model"/>
+                            <field name="res_field"/>
+                            <field name="res_id"/>
+                            <field name="res_name"/>
+                            <field name="company_id"
+                                groups="base.group_multi_company"
+                                options="{'no_create': True}"/>
+                            <field name="public"/>
+                        </group>
+
+                        <group>
+                            <field name="contact_id"/>
+                            <field name="directory_id"
+                                options="{'no_create': True}"
+                                groups="ais_document_management.group_document_standard_user"/>
+                            <field name="label_ids"
+                                widget="many2many_tags"
+                                options="{'color_field': 'color_index', 'no_create_edit': True}"
+                                placeholder="Labels"
+                                groups="ais_document_management.group_document_standard_user"/>
+                            <field name="responsible_user_id"/>
+                            <field name="security_token" invisible="1"/>
+                            <field name="file_size" widget="integer"/>
+                            <field name="checksum"/>
+                        </group>
+
+                        <group string="History" groups="base.group_no_one" invisible="not create_date">
+                            <label for="create_uid" string="Creation"/>
+                            <div>
+                                <field name="create_uid" readonly="1" class="oe_inline"/> on
+                                <field name="create_date" readonly="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" placeholder="Add a description..."/>
+                        </page>
+                        <page string="Indexed Content" invisible="index_content == False">
+                            <field name="index_content"/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Standalone search view with search panel -->
+    <record id="view_attachment_enhanced_search" model="ir.ui.view">
+        <field name="name">ir.attachment.enhanced.search</field>
+        <field name="model">ir.attachment</field>
+        <field name="arch" type="xml">
+            <search string="Attachments">
+                <field name="name" filter_domain="[('name', 'ilike', self)]"/>
+                <field name="directory_id"/>
+                <field name="reference_code"/>
+                <field name="label_ids"/>
+                <field name="contact_id"/>
+                <field name="create_uid" string="Created by"/>
+                <separator/>
+                <filter string="My Documents" 
+                        name="my_documents" 
+                        domain="[('create_uid', '=', uid)]"/>
+                <separator/>
+                <group>
+                    <filter string="Directory" 
+                            name="group_directory" 
+                            context="{'group_by': 'directory_id'}"/>
+                    <filter string="Contact" 
+                            name="group_contact" 
+                            context="{'group_by': 'contact_id'}"/>
+                    <filter string="Created by" 
+                            name="group_create_uid" 
+                            context="{'group_by': 'create_uid'}"/>
+                    <filter string="Creation Date" 
+                            name="group_create_date" 
+                            context="{'group_by': 'create_date'}"/>
+                </group>
+                <searchpanel>
+                    <field name="directory_id" 
+                           icon="fa-folder" 
+                           enable_counters="1"/>
+                    <field name="label_ids" 
+                           select="multi" 
+                           icon="fa-tag" 
+                           enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!-- Standalone kanban view -->
+    <record id="view_attachment_enhanced_kanban" model="ir.ui.view">
+        <field name="name">ir.attachment.enhanced.kanban</field>
+        <field name="model">ir.attachment</field>
+        <field name="arch" type="xml">
+            <kanban edit="false" import="false">
+                <field name="id"/>
+                <field name="mimetype"/>
+                <field name="type"/>
+                <templates>
+                    <t t-name="menu">
+                        <a t-attf-href="/web/content/ir.attachment/#{record.id.raw_value}/datas?download=true" download="" class="dropdown-item">Download</a>
+                        <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                    </t>
+                    <t t-name="card" class="o_kanban_attachment flex-row">
+                        <aside class="o_kanban_image m-1">
+                            <div class="o_kanban_image_wrapper d-flex align-items-center justify-content-center">
+                                <t t-set="webimage" t-value="new RegExp('image.*(gif|jpeg|jpg|png|webp)').test(record.mimetype.value)"/>
+                                <div t-if="record.type.raw_value == 'url'" class="fa fa-link fa-3x text-muted" aria-label="Image is a link"/>
+                                <img t-elif="webimage" t-attf-src="/web/image/#{record.id.raw_value}" width="100" height="100" alt="Document" class="o_attachment_image"/>
+                                <div t-else="!webimage" class="o_image o_image_thumbnail" t-att-data-mimetype="record.mimetype.value"/>
+                            </div>
+                        </aside>
+                        <main class="ms-1">
+                            <div class="o_kanban_details_wrapper d-flex flex-column">
+                                <field name="name" class="text-truncate fw-bold fs-5"/>
+                                <div class="d-flex flex-grow-1 align-items-center">
+                                    <t t-if="record.type.raw_value == 'url'">
+                                        <i class="fa fa-globe" aria-label="Document url"/> <field name="url" widget="url"/>
+                                    </t>
+                                </div>
+                                <div class="d-flex">
+                                    <field name="create_date"/>
+                                    <field name="create_uid" widget="many2one_avatar_user" class="ms-auto"/>
+                                </div>
+                                <div class="o_kanban_record_subtitle">
+                                    <field name="reference_code"/> - Rev. <field name="revision_number"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="directory_id"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="label_ids" widget="many2many_tags" options="{'color_field': 'color_index'}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Custom action that uses our enhanced views -->
+    <record id="action_attachment_enhanced" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">ir.attachment</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('ais_document_management.view_attachment_enhanced_kanban')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('ais_document_management.view_attachment_enhanced_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('ais_document_management.view_attachment_enhanced_form')})]"/>
+        <field name="search_view_id" ref="view_attachment_enhanced_search"/>
+        <field name="context">{'default_type': 'binary'}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Upload your first document!
+            </p>
+            <p>
+                Documents are attached to records and can be organized in directories with labels.
+            </p>
+        </field>
+    </record>
+</odoo>

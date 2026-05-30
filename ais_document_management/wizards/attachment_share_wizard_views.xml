@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Share Attachment Wizard Form View -->
+    <record id="view_attachment_share_wizard_form" model="ir.ui.view">
+        <field name="name">attachment.share.wizard.form</field>
+        <field name="model">attachment.share.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Share Attachment">
+                <sheet>
+                    <group>
+                        <group string="File Name">
+                            <field name="file_name" readonly="1" nolabel="1"/>
+                        </group>
+                        <group string="Share Link - Copy to Clipboard">
+                            <field name="share_url" readonly="1" widget="CopyClipboardURL" nolabel="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Close" class="oe_highlight" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Share Attachment Action -->
+    <record id="action_attachment_share_wizard" model="ir.actions.act_window">
+        <field name="name">Share Attachment</field>
+        <field name="res_model">attachment.share.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_attachment_share_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

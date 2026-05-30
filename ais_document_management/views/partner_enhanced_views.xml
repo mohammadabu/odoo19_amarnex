@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Enhanced Partner Form View -->
+    <record id="view_partner_enhanced_form" model="ir.ui.view">
+        <field name="name">res.partner.enhanced.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <!-- Added groups attribute to button and help text -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_documents" 
+                        type="object" 
+                        class="oe_stat_button" 
+                        icon="fa-file-text"
+                        help="View documents associated with this contact"
+                        groups="ais_document_management.group_document_administrator">
+                    <field name="document_count" widget="statinfo" string="Documents"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
