@@ -10,7 +10,7 @@
         </template>
 
         <template id="custom_external_layout_standard"  inherit_id="web.external_layout_standard" >
-            <xpath expr="//div[1]" position="replace">
+            <xpath expr="//div[contains(@t-attf-class, 'header o_company_')]" position="replace">
                 <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
                     <div class="row ">
                         <div class="col-4 col-md-4">
@@ -40,7 +40,7 @@
                     </t>    
                 </div>
             </xpath>
-            <xpath expr="//div[3]" position="replace">
+            <xpath expr="//div[contains(@t-attf-class, 'footer o_company_')]" position="replace">
                 <div  t-attf-class="footer o_company_#{company.id}_layout {{report_type != 'pdf' and 'mt-auto'}}">
                     <div class="row ">
                         <div class="col-9 col-md-9" style="padding-right: unset;padding-left: unset;">
@@ -70,7 +70,7 @@
                 </style>
 
             </xpath>
-            <xpath expr="//div[1]"  position="after">
+            <xpath expr="//t[@t-call='web.external_layout']/div[1]"  position="after">
                 <div class="row" style="margin-top: 20px;">
                     <div class="col-6 col-md-6">
                         <p style="text-align: left !important;margin: 0 !important;font-weight: 600 !important;color: ##1c1b1b !important;font-size: 18px !important;"><span t-field="o.company_id.name"/></p>
@@ -93,10 +93,8 @@
                     </div>
                 </div>
             </xpath>
-            <xpath expr="//div[1]"  position="replace">
+            <xpath expr="//t[@t-call='web.external_layout']/div[1]"  position="replace">
                 <address style="display:none !important;"></address>
-            </xpath>
-            <xpath expr="//div[contains(@class, 'page')]/t[1]"  position="replace">
             </xpath>
             <xpath expr="//div[@id='informations']"  position="replace">
 
