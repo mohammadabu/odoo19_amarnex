@@ -1,0 +1,306 @@
+:root {
+    --o-brand-odoo: #714B67 !important;
+    --o-brand-primary: #714B67 !important;
+    --o-action-color: #714B67 !important;
+    --o-webclient-background-color: #F0F0F0 !important;
+    --o-view-background-color: #FFFFFF !important;
+    --bs-primary: #714B67 !important;
+    --bs-primary-rgb: 113, 75, 103 !important;
+}
+
+/* ============================================================
+   NAVBAR - White with dark text
+   ============================================================ */
+body .o_main_navbar {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid #DEE2E6 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+    z-index: 10001 !important;
+    position: relative;
+}
+@media (max-width: 767.98px) {
+    body .o_main_navbar {
+        position: static !important;
+    }
+}
+
+body .o_main_navbar .o_menu_sections,
+body .o_main_navbar .o_menu_sections > *,
+body .o_main_navbar .o_menu_sections > a,
+body .o_main_navbar .o_menu_sections > button,
+body .o_main_navbar .o_menu_sections > div,
+body .o_main_navbar .o_menu_sections > span,
+body .o_main_navbar .o_menu_sections > .dropdown,
+body .o_main_navbar .o_menu_sections > .o-dropdown,
+body .o_main_navbar .o_menu_sections > .o-dropdown > *,
+body .o_main_navbar .o_menu_sections .o_nav_entry {
+    background: transparent !important;
+}
+
+body .o_main_navbar .o_menu_sections > *:hover,
+body .o_main_navbar .o_menu_sections > *:active,
+body .o_main_navbar .o_menu_sections > *:focus,
+body .o_main_navbar .o_menu_sections > *.active,
+body .o_main_navbar .o_menu_sections > *.show,
+body .o_main_navbar .o_menu_sections > * > *:hover,
+body .o_main_navbar .o_menu_sections > * > *:active,
+body .o_main_navbar .o_menu_sections > * > *:focus,
+body .o_main_navbar .o_menu_sections > * > *.active,
+body .o_main_navbar .o_menu_sections > * > *.show,
+body .o_main_navbar .o_menu_sections > .o-dropdown.show,
+body .o_main_navbar .o_menu_sections > .o-dropdown.show > *,
+body .o_main_navbar .o_menu_sections > .show,
+body .o_main_navbar .o_menu_sections > .show > * {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body .o_main_navbar .o_menu_sections [class*="active"],
+body .o_main_navbar .o_menu_sections [class*="show"],
+body .o_main_navbar .o_menu_sections [class*="current"],
+body .o_main_navbar .o_menu_sections [class*="selected"],
+body .o_main_navbar .o_menu_sections [class*="open"],
+body .o_main_navbar .o_menu_sections [class*="focus"] {
+    background: transparent !important;
+}
+
+body .o_main_navbar .o_menu_brand,
+body .o_main_navbar .o_menu_toggle,
+body .o_main_navbar > a,
+body .o_main_navbar > button,
+body .o_main_navbar .o_nav_entry,
+body .o_main_navbar .dropdown-toggle,
+body .o_main_navbar .o_menu_sections > a,
+body .o_main_navbar .o_menu_sections .dropdown-toggle,
+body .o_main_navbar .o_menu_systray .dropdown-toggle,
+body .o_main_navbar .o_menu_systray a,
+body .o_main_navbar .o_menu_systray button,
+body .o_main_navbar .oi,
+body .o_main_navbar .fa {
+    color: #4C4C4C !important;
+}
+
+body .o_main_navbar .o_menu_sections > a:hover,
+body .o_main_navbar .o_menu_sections .dropdown-toggle:hover {
+    color: #000000 !important;
+}
+
+body .o_main_navbar .o_menu_sections > a.active,
+body .o_main_navbar .o_menu_sections .o_nav_entry.active {
+    color: #2C2C2C !important;
+    font-weight: 700 !important;
+}
+
+/* ============================================================
+   HOME MENU OVERLAY - Full Screen with 6-column grid
+   ============================================================ */
+body .o_navbar_apps_menu .o_popover,
+body .o_popover.o-dropdown--menu.dropdown-menu:has(.o_app) {
+    position: fixed !important;
+    top: 46px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: calc(100vh - 46px) !important;
+    max-height: calc(100vh - 46px) !important;
+    max-width: 100vw !important;
+    min-width: 100vw !important;
+    margin: 0 !important;
+    padding: 60px 40px 40px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    inset: auto 0 0 0 !important;
+    background: linear-gradient(135deg, #C8B4C8 0%, #D4C4D4 25%, #E8DCE8 50%, #D8CCD8 75%, #C0B0C0 100%) !important;
+    display: grid !important;
+    grid-template-columns: repeat(6, 105px) !important;
+    justify-content: center !important;
+    align-content: start !important;
+    gap: 30px 40px !important;
+    overflow-y: auto !important;
+    z-index: 10000 !important;
+    animation: homeMenuFadeIn 0.15s ease !important;
+}
+
+@keyframes homeMenuFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+body .o_navbar_apps_menu .o_popover::before,
+body .o_popover.o-dropdown--menu.dropdown-menu:has(.o_app)::before {
+    content: "" !important;
+    position: fixed !important;
+    top: 46px; left: 0; right: 0; bottom: 0 !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.22) 45%, rgba(255,255,255,0.08) 65%, rgba(255,255,255,0) 100%) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+body:has(.o_navbar_apps_menu .o_popover) .o_main_navbar .o_menu_sections {
+    visibility: hidden !important;
+}
+body:has(.o_navbar_apps_menu .o_popover) .o_main_navbar .o_menu_brand {
+    visibility: hidden !important;
+}
+
+/* App items */
+body .o_navbar_apps_menu .o_popover a.o_app,
+body .o_popover.o-dropdown--menu a.o_app {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 105px !important;
+    height: auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    gap: 8px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #3C3C3C !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    position: relative !important;
+    z-index: 1 !important;
+    transition: none !important;
+}
+
+body .o_navbar_apps_menu .o_popover a.o_app:hover,
+body .o_popover.o-dropdown--menu a.o_app:hover,
+body .o_navbar_apps_menu .o_popover a.o_app.focus,
+body .o_popover.o-dropdown--menu a.o_app.focus {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    transform: none !important;
+}
+
+/* Icon - white card +10% size, NO shadow */
+.et_app_icon {
+    width: 75px !important;
+    height: 75px !important;
+    background-color: #FFFFFF !important;
+    border-radius: 13px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 9px !important;
+    flex-shrink: 0 !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    border: none !important;
+    transition: transform 0.15s ease !important;
+}
+
+.et_app_icon img {
+    width: 57px !important;
+    height: 57px !important;
+    border-radius: 6px !important;
+    object-fit: contain !important;
+    box-shadow: none !important;
+}
+
+.et_app_icon.et_app_icon_letter {
+    width: 75px !important;
+    height: 75px !important;
+    border-radius: 13px !important;
+    background-color: #714B67 !important;
+    color: #FFFFFF !important;
+    font-size: 26px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+
+body .o_navbar_apps_menu .o_popover a.o_app:hover .et_app_icon {
+    transform: scale(1.05) !important;
+}
+
+/* ============================================================
+   CONTENT AREA
+   ============================================================ */
+body .o_action_manager { background-color: #F0F0F0 !important; }
+body .o_action_manager .o_content { background-color: #F0F0F0 !important; }
+body .o_control_panel { background-color: #FFFFFF !important; border-bottom: 1px solid #DEE2E6 !important; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+body .btn-primary { background-color: #714B67 !important; border-color: #714B67 !important; color: #FFFFFF !important; }
+body .btn-primary:hover, body .btn-primary:focus { background-color: #5F3D57 !important; border-color: #5F3D57 !important; }
+body .btn-outline-primary { color: #714B67 !important; border-color: #714B67 !important; }
+body .btn-outline-primary:hover { background-color: #714B67 !important; color: #FFFFFF !important; }
+
+/* ============================================================
+   LINKS
+   ============================================================ */
+body a { color: #017E84; }
+body a:hover { color: #016468; }
+body .o_field_widget a { color: #017E84 !important; }
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+body .o_form_view .o_form_sheet_bg { background-color: #F0F0F0 !important; }
+body .o_form_view .o_form_sheet { background-color: #FFFFFF !important; border-radius: 4px !important; border: 1px solid #DEE2E6 !important; }
+body .o_form_view .o_form_statusbar { background-color: #F8F9FA !important; }
+body .o_form_view .o_form_statusbar .o_statusbar_status .o_arrow_button.o_arrow_button_current { background-color: #714B67 !important; color: #FFFFFF !important; }
+body .o_form_view .o_notebook > .nav-tabs .nav-link:hover { color: #714B67 !important; }
+body .o_form_view .o_notebook > .nav-tabs .nav-link.active { color: #714B67 !important; border-bottom: 2px solid #714B67 !important; font-weight: 600 !important; }
+
+/* ============================================================
+   LIST / KANBAN
+   ============================================================ */
+body .o_list_view .o_list_table thead th { background-color: #F8F9FA !important; color: #495057 !important; font-weight: 600 !important; }
+body .o_list_view .o_list_table tbody tr:hover { background-color: #F5F0F4 !important; }
+body .o_kanban_view { background-color: #F0F0F0 !important; }
+body .o_kanban_record { border-radius: 4px !important; border: 1px solid #DEE2E6 !important; }
+body .o_kanban_record:hover { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important; }
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+body .o_searchview { border-radius: 4px !important; }
+body .o_searchview:focus-within { border-color: #714B67 !important; box-shadow: 0 0 0 2px rgba(113, 75, 103, 0.12) !important; }
+
+body .o_searchview .o_searchview_facet {
+    background-color: #E9ECEF !important;
+    color: #495057 !important;
+    border: 1px solid #CED4DA !important;
+}
+body .o_searchview .o_searchview_facet:hover {
+    background-color: #DEE2E6 !important;
+    color: #333333 !important;
+}
+body .o_searchview .o_searchview_facet .o_searchview_facet_label {
+    background-color: #714B67 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+}
+body .o_searchview .o_searchview_facet .o_searchview_facet_label .oi,
+body .o_searchview .o_searchview_facet .o_searchview_facet_label .fa,
+body .o_searchview .o_searchview_facet .o_searchview_facet_label i {
+    color: #FFFFFF !important;
+}
+body .o_searchview .o_searchview_facet .o_facet_remove { color: #495057 !important; }
+
+/* ============================================================
+   MISC
+   ============================================================ */
+body .form-check-input:checked { background-color: #714B67 !important; border-color: #714B67 !important; }
+body .form-control:focus, body .form-select:focus { border-color: #714B67 !important; box-shadow: 0 0 0 0.15rem rgba(113, 75, 103, 0.15) !important; }
+body .progress-bar { background-color: #714B67 !important; }
+body .page-item.active .page-link { background-color: #714B67 !important; border-color: #714B67 !important; }
+body .page-link { color: #017E84 !important; }
+body .modal-content { border-radius: 6px !important; }
+body .oe_stat_button:hover { background-color: #F5F0F4 !important; }
+body .oe_stat_button .o_stat_value { color: #714B67 !important; font-weight: 700 !important; }
+body .dropdown-menu { border-radius: 4px !important; box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important; }
+body .dropdown-menu .dropdown-item:hover { background-color: #F5F0F4 !important; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #C0B0B8; border-radius: 3px; }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Rename Invoicing to Accounting -->
+    <record id="account.menu_finance" model="ir.ui.menu">
+        <field name="name">Accounting</field>
+    </record>
+</odoo>

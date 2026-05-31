@@ -1,0 +1,14 @@
+body.oe_login {
+    background: linear-gradient(135deg, #C8B4C8 0%, #D4C4D4 25%, #E8DCE8 50%, #D8CCD8 75%, #C0B0C0 100%) !important;
+}
+.oe_login_form, .card.oe_login_form {
+    background-color: #FFFFFF !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12) !important;
+    border: none !important;
+}
+.oe_login_form .btn-primary {
+    background-color: #714B67 !important;
+    border-color: #714B67 !important;
+}
+.oe_login_form a { color: #017E84 !important; }
