@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <!-- <template id="external_layout_inherit" inherit_id="web.external_layout">
+        <template id="external_layout_inherit" inherit_id="web.external_layout">
             <xpath expr="//t[@t-out='0']" position="before">
                 <t t-set="name" t-value="o.name"/>
                 <t t-set="model_name" t-value="o._name"/>
                 <t t-set="state" t-value="o.state"/>
             </xpath>
-        </template> -->
+        </template>
 
-        <!-- <template id="custom_external_layout_standard"  inherit_id="web.external_layout_standard" >
+        <template id="custom_external_layout_standard"  inherit_id="web.external_layout_standard" >
             <xpath expr="//div[1]" position="replace">
                 <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
                     <div class="row ">
@@ -52,9 +52,9 @@
                     </div>
                 </div>
             </xpath>
-        </template> -->
+        </template>
 
-        <template id="custom_report_invoice_template"  inherit_id="account.report_invoice_document" >
+        <!-- <template id="custom_report_invoice_template"  inherit_id="account.report_invoice_document" >
             <xpath expr="//div[contains(@class, 'page')]"  position="inside">
                 <style type="text/css">   
                     @font-face {
@@ -81,14 +81,8 @@
                         <p style="text-align: left !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.company_id.country_id"/></p>
                         <br/>
                         <p style="text-align: left !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a t-attf-href="tel:{{o.company_id.phone}}" style="color:black;">P:<span t-field="o.company_id.phone"/></a></p>
-                        <!-- <p t-if="o.ref" style="text-align: left !important;margin: 0;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a style="color:black;">Ref: <span t-field="o.ref"/></a></p> -->
                     </div>
                     <div class="col-4 col-md-4">
-                        <!-- <p style="display:block;margin:0 auto;text-align: center;">
-                            <img style="width: 150px;" t-if="o.l10n_jo_edi_qr" 
-                                t-att-src="o._l10n_jo_qr_code_src()"/>
-                            <p style="text-align: center;">JoFotara QR Code</p >    
-                        </p> -->
                     </div>
                     <div class="col-4 col-md-4">
                         <p style="text-align: right !important;margin: 0 !important;font-weight: 600 !important;color: ##1c1b1b !important;font-size: 18px !important;"><span t-field="o.partner_id.name"/></p>
@@ -123,22 +117,6 @@
                 <div id="informations" class="row mt32 mb32">
                     <div class="col-7 col-md-7"> </div>
                     <div class="col-5 col-md-5">
-                        <!-- <div class='row' t-if="o.invoice_date" name="invoice_date">
-                            <div class='col-6 col-md-6'>
-                                <p style="margin: 0 !important;text-align: right !important;font-weight: 500 !important;color: #373333!important;font-size: 14px !important;">Invoice Date:</p>
-                            </div>
-                            <div class='col-6 col-md-6'>
-                                <p style="margin: 0 !important;text-align: right !important;font-weight: 500 !important;color: #373333 !important;font-size: 14px !important;" class="m-0" t-field="o.invoice_date"/>
-                            </div>
-                        </div> -->
-                        <!-- <div class='row' t-if="o.invoice_date" name="invoice_date">
-                            <div class='col-6 col-md-6'>
-                                <p style="margin: 0 !important;text-align: right;font-weight: 500 !important;color: #373333 !important;font-size: 14px !important;">Due Date:</p>
-                            </div>
-                            <div class='col-6 col-md-6'>
-                                <p style="margin: 0 !important;text-align: right !important;font-weight: 500 !important;color: #373333 !important;font-size: 14px !important;" class="m-0" t-field="o.invoice_date_due" />
-                            </div>
-                        </div> -->
                         <t t-set="payments_vals" t-value="o.sudo().invoice_payments_widget and o.sudo().invoice_payments_widget['content'] or []"/>
                         <t t-foreach="payments_vals" t-as="payment_vals">
                             <tr t-if="payment_vals['is_exchange'] == 0">
@@ -166,11 +144,6 @@
                         </t>
                     </div>
                 </div>
-                <!-- <div class='row mb-5'>
-                    <div class='col-12 col-md-12'>
-                        <h2 style="color:#3d58bc;">Invoice <span t-field="o.name"/></h2>
-                    </div>
-                </div> -->
             </xpath>
 
             <xpath expr="//div[@id='payment_term']/div[4]"  position="replace">
@@ -185,14 +158,6 @@
             </xpath>
             <xpath expr="//div[@id='right-elements']"  position="replace">
             </xpath>
-            <!-- <xpath expr="//div[@class='page']/p[1]"  position="replace">
-            </xpath>
-            <xpath expr="//div[@class='page']/p[1]"  position="replace">
-            </xpath>
-            <xpath expr="//div[@class='page']/p[1]"  position="replace">
-            </xpath>
-            <xpath expr="//div[@class='page']/p[1]"  position="replace">
-            </xpath> -->
             
             <xpath expr="//table[@name='invoice_line_table']"  position="replace">
                 <table class="o_has_total_table table-borderless table table-sm o_main_table mb-0" name="invoice_line_table">
@@ -203,7 +168,6 @@
                             <th name="th_quantity" class="text-center" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 10% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Qty</span></th>
                             <th name="th_priceunit" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 14% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Price</span></th>
                             <th name="th_subtotal" class="text-right" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 18% !important;padding: 10px !important;">
-                                <!-- <span style="font-size: 14px !important;font-weight: 800 !important;color: #242222 !important;">Amount</span> -->
                                 <span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Total Price</span>
                             </th>
                         </tr>
@@ -226,7 +190,6 @@
                                     </td>
                                     <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right"><span t-field="line.price_unit"/></td>
                                     <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
-                                        <!-- <span class="text-nowrap" t-field="line.price_subtotal" /> -->
                                         <span class="text-nowrap" t-field="line.price_total" />
                                     </td>
                                 </t>
@@ -273,7 +236,6 @@
 
                 <div style="width:100%font-size:13px;color:#555;margin-bottom: 70px !important;">
                     <div style="background:#f2f2f2; padding:15px;">
-                        <!-- <div style="font-weight:bold; margin-bottom:6px;">Cheques Payment</div> -->
                         <span t-raw="o.company_id.company_terms" />
                         <div style="margin-top:15px;" class="row">
                             <div style="width:50%;">
@@ -315,38 +277,7 @@
 
 
 
-                <!-- <span t-raw="o.company_id.company_terms" />
-                <p t-if="o.partner_bank_id.acc_number" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">ACCOUNT NUMBER</p>
-                <p t-if="o.partner_bank_id.acc_number" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.acc_number"></span></p>
-                <p t-if="o.partner_bank_id.acc_holder_name" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">Beneficiary Name (ENGLISH)</p>
-                <p t-if="o.partner_bank_id.acc_holder_name" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.acc_holder_name"></span></p>
-                <p t-if="o.partner_bank_id.beneficiary_ar" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">Beneficiary Name (ARABIC)</p>
-                <p t-if="o.partner_bank_id.beneficiary_ar" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.beneficiary_ar"></span></p>
-                <p t-if="o.partner_bank_id.iban" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">IBAN</p>
-                <p t-if="o.partner_bank_id.iban" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.iban"></span></p>
-                <p t-if="o.partner_bank_id.bank_id.bic" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">Swift Code:</p>
-                <p t-if="o.partner_bank_id.bank_id.bic" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;"><span t-field="o.partner_bank_id.bank_id.bic"></span></p>
-                <p t-if="o.partner_bank_id.bank_id.bic" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">Bank Address:</p>
-                <p t-if="o.partner_bank_id.bank_id.bic" style="font-weight: normal !important;color: gray !important;margin: 10px 0px 10px 0px !important;font-size: 14px !important;">
-                    <span t-if="o.partner_bank_id.bank_id.city" t-field="o.partner_bank_id.bank_id.city"></span>,
-                    <span t-if="o.partner_bank_id.bank_id.name" t-field="o.partner_bank_id.bank_id.country.name"></span>,
-                    <span t-if="o.partner_bank_id.bank_id.street2" t-field="o.partner_bank_id.bank_id.street2"></span>,
-                    <span t-if="o.partner_bank_id.bank_id.street" t-field="o.partner_bank_id.bank_id.street"></span>
-                </p> -->
             </xpath>
-            <!-- <xpath expr="//div[@id='total']/div/table"  position="attributes"> 
-                <attribute name="style">display:none !important;</attribute>
-                <attribute name="class"></attribute>
-            </xpath>
-            <xpath expr="//div[@id='total']/div/table/tr[1]"  position="replace">
-                <span></span>
-            </xpath>
-             <xpath expr="//div[@id='total']/div/table/t[1]"  position="replace">
-                <span></span>
-            </xpath>
-            <xpath expr="//div[@id='total']/div/table/tr[1]"  position="replace">
-                <span></span>
-            </xpath> -->
             <xpath expr="//div[contains(@id,'qrcode')]"  position="replace">
                 <div id="qrcode" style="display:none;">
                     
@@ -355,7 +286,7 @@
             <xpath expr="//div[contains(@id,'payment_link_qrcode')]"  position="replace">
             </xpath>
             
-        </template>
+        </template> -->
         
         
     </data>
