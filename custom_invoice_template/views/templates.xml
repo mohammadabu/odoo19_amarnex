@@ -9,7 +9,7 @@
             </xpath>
         </template> -->
 
-        <template id="custom_external_layout_standard"  inherit_id="web.external_layout_standard" >
+        <!-- <template id="custom_external_layout_standard"  inherit_id="web.external_layout_standard" >
             <xpath expr="//div[1]" position="replace">
                 <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
                     <div class="row ">
@@ -52,7 +52,8 @@
                     </div>
                 </div>
             </xpath>
-        </template>
+        </template> -->
+
         <template id="custom_report_invoice_template"  inherit_id="account.report_invoice_document" >
             <xpath expr="//div[contains(@class, 'page')]"  position="inside">
                 <style type="text/css">   
