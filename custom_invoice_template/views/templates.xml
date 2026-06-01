@@ -34,7 +34,7 @@
                     <t t-if="model_name == 'account.move' or model_name == 'sale.order'">
                         <div class="row ">
                             <div class="col-12 col-md-12">
-                                <img style="width:100% !important;" src="/custom_invoice_template/static/image/group_40335.png"  alt="page-line"/>
+                                <img style="width:100% !important;" src="/custom_invoice_template/static/image/group_4033511.svg"  alt="page-line"/>
                             </div>
                         </div>
                     </t>    
