@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <!-- <template id="external_layout_inherit" inherit_id="web.external_layout">
+        <template id="external_layout_inherit" inherit_id="web.external_layout">
             <xpath expr="//t[@t-out='0']" position="before">
                 <t t-set="name" t-value="o.name"/>
                 <t t-set="model_name" t-value="o._name"/>
                 <t t-set="state" t-value="o.state"/>
             </xpath>
-        </template> -->
+        </template>
 
         <template id="custom_external_layout_standard"  inherit_id="web.external_layout_standard" >
             <xpath expr="//div[1]" position="replace">
