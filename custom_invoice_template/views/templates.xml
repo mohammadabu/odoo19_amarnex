@@ -54,7 +54,7 @@
             </xpath>
         </template>
 
-        <!-- <template id="custom_report_invoice_template"  inherit_id="account.report_invoice_document" >
+        <template id="custom_report_invoice_template"  inherit_id="account.report_invoice_document" >
             <xpath expr="//div[contains(@class, 'page')]"  position="inside">
                 <style type="text/css">   
                     @font-face {
@@ -286,7 +286,7 @@
             <xpath expr="//div[contains(@id,'payment_link_qrcode')]"  position="replace">
             </xpath>
             
-        </template> -->
+        </template>
         
         
     </data>
