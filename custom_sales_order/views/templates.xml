@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <template id="custom_purchase_order_document"  inherit_id="sale.report_saleorder_document" >
+            <xpath expr="//t[@t-set='address']" position="replace">
+
+            </xpath>
+
+            <xpath expr="//div[@class='page']/t[@t-set='layout_document_title']" position="replace">
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-6 col-md-6">
+                        <p style="text-align: left !important;margin: 0 !important;font-weight: 600 !important;color: ##1c1b1b !important;font-size: 18px !important;"><span t-field="doc.company_id.name"/></p>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="doc.company_id.street"/></p>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="doc.company_id.street2"/>.</p>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="doc.company_id.city"/> <span t-field='doc.company_id.state_id'/> <span t-field="doc.company_id.zip"/></p>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="doc.company_id.country_id"/></p>
+                        <br/>
+                        <p style="text-align: left !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a t-attf-href="tel:{{doc.company_id.phone}}" style="color:black;">P:<span t-field="doc.company_id.phone"/></a></p>
+                        <!-- <p t-if="o.ref" style="text-align: left !important;margin: 0;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a style="color:black;">Ref: <span t-field="o.ref"/></a></p> -->
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <p style="text-align: right !important;margin: 0 !important;font-weight: 600 !important;color: ##1c1b1b !important;font-size: 18px !important;"><span t-field="doc.partner_id.name"/></p>
+                        <p style="text-align: right !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="doc.partner_id.street"/></p>
+                        <p style="text-align: right !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="doc.partner_id.street2"/></p>
+                        <p style="text-align: right !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="doc.partner_id.city"/> <span t-field='doc.partner_id.state_id'/> <span t-field="doc.partner_id.zip"/></p>
+                        <p style="text-align: right !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="doc.partner_id.country_id"/></p>
+                        <br/>
+                        <p style="text-align: right !important;margin: 0;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a t-attf-href="tel:{{doc.partner_id.phone}}" style="color:black;">P:<span t-field="doc.partner_id.phone"/></a></p>
+                    </div>
+                </div>
+            </xpath>
+            
+            <xpath expr="//div[@class='page']/div[@id='informations']" position="replace">
+                <div class="row " style="margin-top: 19px;background: #f3f4f6 !important;padding: 16px 0 16px 0;border-radius: 6px;margin-left: 0px;">
+
+                    <!-- <t t-if="doc.user_id.name">
+                        <div class="col-6 col-md-6" style="padding-left: 15px;">
+                            <span style="font-size:14px !important;">Salesperson:</span> <span  t-field="doc.user_id"/>
+                        </div>
+                    </t> -->
+
+                    <t t-if="doc.client_order_ref">
+                        <div class="col-8 col-md-8" style="padding-left: 15px;">
+                            <span style="font-size:14px !important;">Ref:</span> <span style="font-size:14px !important;"  t-field="doc.client_order_ref"/>
+                        </div>
+                    </t>
+
+                    <t t-if="doc.state in ['draft', 'sent']">
+                        <div class="col-4 col-md-4">
+                            <span style="font-size:14px !important;">Quotation Date:</span><span style="font-size:14px !important;"  t-field="doc.date_order" t-options='{"widget": "date"}'/>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="col-4 col-md-4">
+                            <span style="font-size:14px !important;">Order Date:</span><span style="font-size:14px !important;"  t-field="doc.date_order" t-options='{"widget": "date"}'/>
+                        </div>
+                    </t>
+
+                    
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@class='page']/table" position="replace">
+                <t t-set="display_discount" t-value="any(l.discount for l in lines_to_report)"/>
+                <table class="o_has_total_table table-borderless table table-sm o_main_table mb-0" name="invoice_line_table">
+                    <thead>
+                        <tr>
+                            <th name="th_item" class="text-left" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 22% !important;padding: 10px !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Item</span></th>
+                            <th name="th_quantity" class="text-center" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 10% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Qty</span></th>
+                            <th name="th_priceunit" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 14% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Price</span></th>
+                            
+
+                            <th t-if="display_discount" name="th_subtotal" class="text-right" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 18% !important;padding: 10px !important;">
+                                <span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Discount(%)</span>
+                            </th>
+
+                            <th name="th_subtotal" class="text-right" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 18% !important;padding: 10px !important;">
+                                <span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Total Price</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="invoice_tbody">
+                        <t t-set="current_section" t-value="None"/>
+                        <t t-set="current_subsection" t-value="None"/>
+                        <t t-set="price_field" t-value="'price_total' if hide_taxes_details else 'price_subtotal'"/>
+
+                        <t t-set="row_num" t-value="0"/>
+                        <t t-foreach="lines_to_report" t-as="line">
+                            <t t-set="is_note" t-value="line.display_type == 'line_note'"/>
+                            <t t-set="row_num" t-value="row_num + 1"/>
+
+
+
+
+                            <tr t-if="not is_note" t-att-style="'background-color:white;' if (row_num % 2) != 0 else 'background-color:#baccef;' " >
+                                <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+                                <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-center">      
+                                    <span t-field="line.product_uom_qty"/>
+                                </td>
+                                <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right"><span t-field="line.price_unit"/></td>
+
+                                <td t-if="display_discount" style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
+                                    <span class="text-nowrap" t-field="line.discount" />
+                                </td>
+
+                                <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
+                                    <span class="text-nowrap" t-field="line.price_total" />
+                                </td>
+                            </tr>
+                            <tr t-elif="is_note" name="tr_note" class="fst-italic o_line_note" t-att-style="'background-color:white;' if (row_num % 2) != 0 else 'background-color:#baccef;' ">
+                                <td
+                                    name="td_note_name"
+                                    colspan="99"
+                                    t-att-class="padding_class"
+                                >
+                                    <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
+                                </td>
+                            </tr>
+
+
+
+
+                        </t>
+                        <tr t-att-style="'background-color:white;' if ((row_num + 1) % 2) != 0 else 'background-color:#baccef;' " >
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td t-if="display_discount" style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">Total</td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">
+                                <span t-field="doc.amount_total" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </xpath>
+
+
+            <xpath expr="//div[@class='page']/div[@class='clearfix']" position="replace">
+
+            </xpath>
+
+        </template>                
+
+</odoo> 

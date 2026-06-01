@@ -1,0 +1,13 @@
+[project]
+name = "odoo-addons-oca-account-financial-reporting"
+version = "19.0.20260128.0"
+dependencies = [
+    "odoo-addon-account_financial_report==19.0.*",
+    "odoo-addon-account_tax_balance==19.0.*",
+    "odoo-addon-partner_statement==19.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 19.0",
+]

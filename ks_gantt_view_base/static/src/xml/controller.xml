@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ks_gantt_view_base.GanttController">
+        <div t-att-class="className" t-ref="root">
+            <Layout className="model.useSampleModel ? 'o_view_sample_data' : ''" display="props.display">
+                <t t-set-slot="control-panel-create-button">
+                    <button t-if="model.metaData.ks_isCreate" class="o_gantt_button_add btn btn-primary" data-hotkey="r"
+                            t-on-click="ksOnCreate">
+                        create
+                    </button>
+                </t>
+                <t t-set-slot="control-panel-additional-actions">
+                    <CogMenu/>
+                </t>
+                <t t-set-slot="layout-buttons">
+                    <t t-call="{{ props.buttonTemplate }}"/>
+                </t>
+                <t t-set-slot="layout-actions">
+                    <SearchBar t-if="searchBarToggler.state.showSearchBar"/>
+                </t>
+                <t t-set-slot="control-panel-navigation-additional">
+                    <t t-component="searchBarToggler.component" t-props="searchBarToggler.props"/>
+                </t>
+                <t t-set-slot="default" t-slot-scope="layout">
+                    <t t-if="showNoContentHelp">
+                        <t t-if="props.info.noContentHelp" t-call="web.ActionHelper">
+                            <t t-set="noContentHelp" t-value="props.info.noContentHelp"/>
+                        </t>
+                        <t t-else="" t-call="web.NoContentHelper"/>
+                    </t>
+                    <t t-component="props.Renderer"
+                       class="model.useSampleModel ? 'o_sample_data_disabled' : ''"
+                       model="model"
+                       arch="props.arch"
+                       ksGanttConfig.bind="ksGanttConfig"
+                       ksGanttCreateDp.bind="ksGanttCreateDp"
+                       openDialog.bind="openDialog"
+                       _KsOnDeleteRecord.bind="_KsOnDeleteRecord"
+                    />
+                </t>
+            </Layout>
+        </div>
+    </t>
+
+
+    <t t-name="ks_gantt_view_base.GanttView.Buttons">
+        <button type="button" class="o_dropdown_toggler_btn btn btn-secondary dropdown-toggle"
+                data-bs-toggle="dropdown">Export
+        </button>
+        <ul role="menu" class="o_dropdown_menu dropdown-menu">
+            <t t-foreach="export_type" t-as="export" t-key="export_index">
+                <li role="menuitem" class="o_menu_item">
+                    <a aria-checked="false" role="menuitemcheckbox" t-att-report_type="export['type']"
+                       class="dropdown-item ks_gantt_export_list" t-on-click="_ksExportReport">
+                            <t t-esc="export['value']"/>
+                    </a>
+                </li>
+            </t>
+        </ul>
+    </t>
+
+</templates>
