@@ -131,6 +131,14 @@
                         </tr>
                     </tbody>
                 </table>
+
+
+                <section id="terms" class="mt-4">
+                <h4 class="">Terms &amp; Conditions</h4>
+                <span t-field="doc.company_id.company_terms" t-options="{'widget': 'text'}"/>
+                </section>
+
+
             </xpath>
 
 
