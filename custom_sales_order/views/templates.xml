@@ -135,8 +135,16 @@
 
                 <section id="terms" class="mt-4">
                 <!-- <h4 class="">Terms &amp; Conditions</h4> -->
-                <span t-field="doc.company_id.company_terms" t-options="{'widget': 'text'}"/>
+                    <span t-field="doc.company_id.company_terms" t-options="{'widget': 'text'}"/>
                 </section>
+
+                <div t-if="o.company_id.signature" style="width:100% !important;">
+                    <div style="width:30% !important;text-align: center !important;float: right !important;">
+                        <h5>Signature</h5>
+                        <img t-att-src="image_data_uri(o.company_id.signature)" alt="Signature" class="img-fluid" />
+                        <p>Moutasem Shahin</p>
+                    </div>
+                </div>
 
 
             </xpath>

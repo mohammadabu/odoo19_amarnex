@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="custom_invoice_form_signature" model="ir.ui.view">
+            <field name="name">res.company.form.signature</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <group string="Signature">
+                        <field name="signature" widget="image"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>   

@@ -6,7 +6,8 @@
     'version': '0.1',
     'depends': ['base','sale','product'],
     'data': [
-        'views/templates.xml'
+        'views/templates.xml',
+        'views/custom_invoice.xml'
     ],
     'demo': [
     ],
