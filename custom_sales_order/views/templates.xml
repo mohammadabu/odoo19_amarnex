@@ -140,9 +140,9 @@
 
                 <div t-if="doc.company_id.signature" style="width:100% !important;">
                     <div style="width:30% !important;text-align: center !important;float: right !important;">
-                        <h5>Signature</h5>
+                        <!-- <h5>Signature</h5> -->
                         <img t-att-src="image_data_uri(doc.company_id.signature)" alt="Signature" class="img-fluid" />
-                        <p>Moutasem Shahin</p>
+                        <!-- <p>Moutasem Shahin</p> -->
                     </div>
                 </div>
 
