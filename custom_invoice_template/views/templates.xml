@@ -82,13 +82,13 @@
                         <p style="text-align: left !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a t-attf-href="tel:{{o.company_id.phone}}" style="color:black;">P:<span t-field="o.company_id.phone"/></a></p>
                         <!-- <p t-if="o.ref" style="text-align: left !important;margin: 0;font-size: 16px !important;color: #3f3a3a !important;font-weight: 400 !important;"><a style="color:black;">Ref: <span t-field="o.ref"/></a></p> -->
                     </div>
-                    <!-- <div class="col-4 col-md-4">
-                        <p st-if="o.l10n_jo_edi_qr" style="display:block;margin:0 auto;text-align: center;">
+                    <div class="col-4 col-md-4">
+                        <!-- <p st-if="o.l10n_jo_edi_qr" style="display:block;margin:0 auto;text-align: center;">
                             <img style="width: 150px;"  
                                 t-att-src="o._l10n_jo_qr_code_src()"/>
                             <p style="text-align: center;">JoFotara QR Code</p >    
-                        </p>
-                    </div> -->
+                        </p> -->
+                    </div>
                     <div class="col-4 col-md-4">
                         <p style="text-align: right !important;margin: 0 !important;font-weight: 600 !important;color: ##1c1b1b !important;font-size: 18px !important;"><span t-field="o.partner_id.name"/></p>
                         <p style="text-align: right !important;margin: 0 !important;font-size: 14px !important;color: #3f3a3a !important;font-weight: 400 !important;"><span t-field="o.partner_id.street"/></p>
