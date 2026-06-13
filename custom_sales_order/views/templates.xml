@@ -98,7 +98,7 @@
                                 </td>
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right"><span t-field="line.price_unit"/></td>
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right">
-                                    <span t-out="', '.join(t.tax_label or t.name for t in line.tax_id)"/>
+                                    <span t-out="', '.join(t.tax_label or t.name for t in line.tax_ids)"/>
                                 </td>
 
                                 <td t-if="display_discount" style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
