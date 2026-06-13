@@ -202,6 +202,7 @@
                             <th name="th_description" class="text-left" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 36%  !important;padding: 10px !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Description</span></th>
                             <th name="th_quantity" class="text-center" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 10% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Qty</span></th>
                             <th name="th_priceunit" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 14% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Price</span></th>
+                            <th name="th_taxes" class="text-right" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 14% !important;padding: 10px !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Taxes</span></th>
                             <th name="th_subtotal" class="text-right" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 18% !important;padding: 10px !important;">
                                 <!-- <span style="font-size: 14px !important;font-weight: 800 !important;color: #242222 !important;">Amount</span> -->
                                 <span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Total Price</span>
@@ -225,6 +226,9 @@
                                         <span t-field="line.product_uom_id"  groups="uom.group_uom"/>
                                     </td>
                                     <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right"><span t-field="line.price_unit"/></td>
+                                    <td style="font-size: 14px !important;font-weight: 800 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right">
+                                        <span style="font-weight: 800 !important;" t-out="', '.join(t.tax_label or t.name for t in line.tax_ids)"/>
+                                    </td>
                                     <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
                                         <!-- <span class="text-nowrap" t-field="line.price_subtotal" /> -->
                                         <span class="text-nowrap" t-field="line.price_total" />
@@ -236,10 +240,12 @@
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">Subtotal</td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span t-field="o.amount_untaxed"/></td>
                         </tr>
                         <tr t-att-style="'background-color:white;' if ((row_num + 2) % 2) != 0 else 'background-color:#baccef;' " >
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
@@ -255,10 +261,12 @@
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">Paid</td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span t-esc="total_payment" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                         </tr> 
                         <tr t-att-style="'background-color:white;' if ((row_num + 4) % 2) != 0 else 'background-color:#baccef;' " >
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
