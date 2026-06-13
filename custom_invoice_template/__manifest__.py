@@ -3,7 +3,7 @@
     'author': "Techs Factory",
     'website': "https://www.techsfactory.com",
     'version': '0.1',
-    'depends': ['base','account'],
+    'depends': ['base','account','l10n_gcc_invoice'],
     'data': [
         'views/templates.xml',
         'views/custom_bank_view.xml',
