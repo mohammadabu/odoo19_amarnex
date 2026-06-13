@@ -67,7 +67,7 @@
                             <th name="th_item" class="text-left" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 22% !important;padding: 10px !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Item</span></th>
                             <th name="th_quantity" class="text-center" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 10% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Qty</span></th>
                             <th name="th_priceunit" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 14% !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;padding: 10px !important;">Price</span></th>
-                            
+                            <th name="th_taxes" class="text-right" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 14% !important;padding: 10px !important;"><span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Taxes</span></th>
 
                             <th t-if="display_discount" name="th_subtotal" class="text-right" style="border-top: 1px solid white !important;border-bottom: 1px solid !important;width: 18% !important;padding: 10px !important;">
                                 <span style="font-size: 14px !important;font-weight: 800 !important;color: #3d58bc !important;">Discount(%)</span>
@@ -97,6 +97,9 @@
                                     <span t-field="line.product_uom_qty"/>
                                 </td>
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right"><span t-field="line.price_unit"/></td>
+                                <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right">
+                                    <span t-out="', '.join(t.tax_label or t.name for t in line.tax_id)"/>
+                                </td>
 
                                 <td t-if="display_discount" style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
                                     <span class="text-nowrap" t-field="line.discount" />
@@ -121,6 +124,7 @@
 
                         </t>
                         <tr t-att-style="'background-color:white;' if ((row_num + 1) % 2) != 0 else 'background-color:#baccef;' " >
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td t-if="display_discount" style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
