@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <t t-name="account_dynamic_reports.PycusAgeingReportFilters" t-inherit-mode="primary" t-inherit="account_dynamic_reports.PycusFilters">
+        <xpath expr="//div[@name='pycus-filter-sec-2-in-one']" position="replace">
+            <div class="row" name="pycus-filter-sec-2-in-one">
+                <div class="col col-2">
+                    <span>As On Date</span>
+                </div>
+                <div class="col col-4">
+                    <DateTimeInput
+                          id="asOnDate"
+                          value="state.as_on_date"
+                          type="'date'"
+                          placeholder="asOnPlaceholder"
+                          onChange.bind="onAsOnDateChanged"
+                    />
+                </div>
+
+                <div class="col col-2">
+                    <span>Report Type</span>
+                </div>
+                <div class="col col-4">
+                    <SelectMenu t-props="{choices: state.report_type.choices,
+                              searchable: false,
+                              autoSort: false,
+                              class: 'pycus-filter-dropdown',
+                              togglerClass: 'your-toggler-class',
+                              required: false,
+                              value: state.report_type.selectedValue.value,
+                              searchPlaceholder: 'Report Type',
+                              onSelect: handleReportTypeSelect,
+                              }"
+                    />
+                </div>
+
+                <div class="col col-2">
+                    <span>Partner Type</span>
+                </div>
+                <div class="col col-4">
+                    <SelectMenu t-props="{choices: state.partner_type.choices,
+                              searchable: false,
+                              autoSort: false,
+                              class: 'pycus-filter-dropdown',
+                              togglerClass: 'your-toggler-class',
+                              required: false,
+                              value: state.partner_type.selectedValue.value,
+                              searchPlaceholder: 'Partner Type',
+                              onSelect: handlePartnerTypeSelect,
+                              }"
+                    />
+                </div>
+
+                <div class="col col-2">
+                    <span>Include Details</span>
+                </div>
+                <div class="col col-4">
+                    <SelectMenu t-props="{choices: state.include_details.choices,
+                              searchable: false,
+                              autoSort: false,
+                              class: 'pycus-filter-dropdown',
+                              togglerClass: 'your-toggler-class',
+                              required: true,
+                              value: state.include_details.selectedValue.value,
+                              searchPlaceholder: 'Include Details',
+                              onSelect: handleIncludeDetailsSelect,
+                              }"
+                    />
+                </div>
+
+                <div class="col col-2">
+                    <span>Ageing Buckets</span>
+                </div>
+                <div class="col col-10">
+                    <input name="bucket_1" type="number" t-att-value="state.bucket_1" t-on-change="onBucket1Changed" class="o_input form-control rounded-0"/>
+                    <input name="bucket_2" type="number" t-att-value="state.bucket_2" t-on-change="onBucket2Changed" class="o_input form-control rounded-0"/>
+                    <input name="bucket_3" type="number" t-att-value="state.bucket_3" t-on-change="onBucket3Changed" class="o_input form-control rounded-0"/>
+                    <input name="bucket_4" type="number" t-att-value="state.bucket_4" t-on-change="onBucket4Changed" class="o_input form-control rounded-0"/>
+                    <input name="bucket_5" type="number" t-att-value="state.bucket_5" t-on-change="onBucket5Changed" class="o_input form-control rounded-0"/>
+                </div>
+
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='pycus-filter-sec-1-in-one']" position="replace">
+            <div class="row" name="pycus-filter-sec-1-in-one">
+                <div class="col col-2">
+                    <span>Partner Tags</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'res.partner.category'"
+                        defaultValues="state.defaultPartnerTagsValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedPartnerTags"
+                    />
+                </div>
+
+                <div class="col col-2">
+                    <span>Accounts</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'account.account'"
+                        defaultValues="state.defaultAccountValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedAccounts"
+                    />
+                </div>
+
+                <div class="col col-2">
+                    <span>Partners</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'res.partner'"
+                        defaultValues="state.defaultPartnerValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedPartners"
+                    />
+                </div>
+            </div>
+        </xpath>
+    </t>
+</odoo>

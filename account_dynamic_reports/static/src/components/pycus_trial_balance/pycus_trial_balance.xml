@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+
+    <t t-name="account_dynamic_reports.trialBalance" owl="1">
+        <div class="py-header">
+            <nav class="navbar navbar-expand-lg bg-white">
+              <div class="container-fluid">
+                <div class="d-flex">
+                    <a class="navbar-brand" href="#"><strong>Trial Balance</strong></a>
+                </div>
+                <div class="d-flex">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+                        <li class="nav-item">
+                            <button t-on-click="toggleVisibility" class="btn btn-secondary dropdown-toggle custom-dropdown">
+                                <span class="fa fa-filter"></span>
+                                Filters
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-flex">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+
+                    <li class="nav-item pycus-button-nav">
+                        <button t-on-click="downloadXlsx" class="btn btn-secondary custom-dropdown">
+                            <span class="fa fa-download"></span>
+                            Xlsx
+                        </button>
+                    </li>
+
+                      <li class="nav-item pycus-button-nav">
+                        <button t-on-click="downloadPdf" class="btn btn-secondary custom-dropdown">
+                            <span class="fa fa-download"></span>
+                            Pdf
+                        </button>
+                    </li>
+
+                  </ul>
+                  <button class="btn btn-outline-success" t-on-click="apply_filters" type="submit">Apply</button>
+                </div>
+              </div>
+            </nav>
+            <hr class="my-1"/>
+        </div>
+
+        <div class="pycusFilterBox" t-if="state.isFilterVisible">
+            <PycusTrialBalanceFilters filterValues="state.filterValues" updateValues.bind="getFilterValues"/>
+        </div>
+
+        <div id="loading" t-if="state.showLoader">
+            <img id="loading-image" src="account_dynamic_reports/static/src/img/Spinner-2.gif" alt="Loading..." />
+        </div>
+
+        <div class="py-lines-container bg-white">
+            <table class="table py-tb-data-table">
+                <thead>
+                  <tr class="py-main-thead-master-tr">
+                    <th class="py-th-accounts" scope="col" colspan="2">Accounts</th>
+                    <th class="py-th-initial" scope="col" colspan="2">Initial Balance</th>
+                    <th class="py-th-comparison" scope="col" colspan="2"
+                        t-if="state.filterValues.comparison_range_string">
+                        <t t-esc="state.filterValues.comparison_range_string"/>
+                    </th>
+                    <th class="py-th-current" scope="col" colspan="2">
+                        <t t-esc="state.filterValues.current_range_string"/>
+
+                    </th>
+                    <th class="py-th-ending" scope="col" colspan="2">Ending Balance</th>
+                  </tr>
+                  <tr class="py-main-thead-tr">
+                    <th style="background-color: #f4fcff;" scope="col" colspan="2"></th>
+                    <th class="py-sub-th-initial" scope="col">Debit</th>
+                    <th class="py-sub-th-initial" scope="col">Credit</th>
+                    <th class="py-sub-th-comparison" scope="col" t-if="state.filterValues.comparison_range_string">Debit</th>
+                    <th class="py-sub-th-comparison" scope="col" t-if="state.filterValues.comparison_range_string">Credit</th>
+                    <th class="py-sub-th-current" scope="col">Debit</th>
+                    <th class="py-sub-th-current" scope="col">Credit</th>
+                    <th class="py-sub-th-ending" scope="col">Debit</th>
+                    <th class="py-sub-th-ending" scope="col">Credit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <t t-if="state.gl_lines.length > 0">
+                        <t t-foreach="state.gl_lines" t-as="line" t-key="line.time_string">
+                            <PycusTrialBalanceLine gl_line="line" filterValues="state.filterValues" activeId="state.activeId"/>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <tr>
+                            <td colspan="6">
+                                <p style="text-align: center">No matching data found!!!</p>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+
+    </t>
+</template>

@@ -1,0 +1,31 @@
+.pycusFilters {
+    //background-color: red;
+    width: 90%;
+    text-align: center;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+
+    .pycus-filter-dropdown {
+      display: inline-block;
+      min-width: 100%;
+      --padding-right: 5px;
+      --padding-top:5px;
+    }
+
+    span {
+        vertical-align: top;
+          font-weight: 500;
+          padding-left: 20px;
+    }
+
+    .col {
+        display: flex;
+        justify-content: center; /* horizontally center */
+        align-items: center; /* vertically center */
+        padding-top: 5px;
+        //height: 30px; /* example height */
+        //border: 1px solid #ccc; /* example border for visualization */
+    }
+}

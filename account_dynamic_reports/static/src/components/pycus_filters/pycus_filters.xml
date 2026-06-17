@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+    <t t-name="account_dynamic_reports.PycusFilters">
+        <div class="pycusFilters" name="pycus-main-filters">
+
+            <div class="row" name="pycus-filter-sec-2-in-one">
+                <div class="col col-2">
+                    <span>Date From</span>
+                </div>
+                <div class="col col-4">
+                    <DateTimeInput
+                          id="dateFrom"
+                          value="state.date_from"
+                          type="'date'"
+                          placeholder="fromPlaceholder"
+                          onChange.bind="onDateFromChanged"
+                    />
+                </div>
+                <div class="col col-2">
+                    <span>Date To</span>
+                </div>
+                <div class="col col-4">
+                    <DateTimeInput
+                          id="dateTo"
+                          value="state.date_to"
+                          type="'date'"
+                          placeholder="toPlaceholder"
+                          onChange.bind="onDateToChanged"
+                    />
+                </div>
+                <div class="col col-2">
+                    <span>Date Range</span>
+                </div>
+                <div class="col col-4">
+                    <SelectMenu t-props="{choices: state.date_range.choices,
+                              searchable: false,
+                              autoSort: false,
+                              class: 'pycus-filter-dropdown',
+                              togglerClass: 'your-toggler-class',
+                              required: false,
+                              value: state.date_range.selectedValue.value,
+                              searchPlaceholder: 'Date Range',
+                              onSelect: handleDateRangeSelect,
+                              }"
+                    />
+                </div>
+            </div>
+
+            <div class="row" name="pycus-filter-sec-1-in-one">
+                <div class="col col-2">
+                    <span>Accounts</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'account.account'"
+                        defaultValues="state.defaultAccountValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedAccounts"
+                    />
+                </div>
+
+                <div class="col col-2">
+                    <span>Journals</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'account.journal'"
+                        defaultValues="state.defaultJournalValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedJournals"
+                    />
+                </div>
+
+                <div class="col col-2">
+                    <span>Partners</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'res.partner'"
+                        defaultValues="state.defaultPartnerValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedPartners"
+                    />
+                </div>
+
+                <div class="col col-2">
+                    <span>Account Tags</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'account.account.tag'"
+                        defaultValues="state.defaultAccountTagValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedAccountTags"
+                    />
+                </div>
+
+            </div>
+
+        </div>
+
+    </t>
+</template>

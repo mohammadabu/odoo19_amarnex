@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="partner_ageing">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <style>
+                        .pims_report_content{
+                            font-size: 14px;
+                            font-family" 'Arial';
+                        }
+
+                        .pims_report_line_table {
+                            width:100%;
+                            border-collapse: collapse;
+                        }
+
+                        .pims_report_line_table thead{
+                            width: 100%;
+                            overflow: auto;
+                            border-bottom:2px solid grey;
+                        }
+
+                        .py-fin-table-main-tr td{
+                            font-weight:bold;
+                        }
+
+                        .py-fin-table-sub-tr td:first-child{
+                            padding-left: 30px;
+                        }
+
+                        .pims_report_line_initial_tr {
+                            font-style:italic;
+                        }
+
+                        .pims_report_line_subtotal {
+                            font-weight:bold;
+                            background-color: white;
+                            --border:1px solid grey;
+                        }
+                        .py-td-amount{
+                            text-align: right
+                        }
+
+                        .py-font-weight-500 {
+                            font-weight: bold;
+                        }
+                        .py-font-weight-100 {
+                            font-weight: 100;
+                            opacity: 0.5;
+                        }
+                    </style>
+                    <h3><span t-esc="res_company.name"/>: Partner Ageing</h3>
+                    <t t-set="filters" t-value="get_filters(wiz_id)"/>
+                    <t t-set="combination_all" t-value="get_main_lines(wiz_id)"/>
+                    <t t-set="ageing_bucket" t-value="combination_all[0]"/>
+                    <t t-set="move_lines" t-value="combination_all[1]"/>
+                    <div>
+
+                        <div class="row pims_report_content">
+                            <div class="col-3">
+                                <strong>As on Date:</strong>
+                                <p t-esc="filters['as_on_date']" t-options='{"widget": "date"}'></p>
+                            </div>
+                            <div class="col-3">
+                                <strong>Accounts</strong>
+                                <t t-if="filters['defaultAccountValues']">
+                                    <p><t t-out="','.join([a['code'] for a in filters['defaultAccountValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+                            <div class="col-3">
+                                <strong>Partners</strong>
+                                <t t-if="filters['defaultPartnerValues']">
+                                    <p><t t-out="','.join([a['label'] for a in filters['defaultPartnerValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+                            <div class="col-3">
+                                <strong>Partner tags</strong>
+                                <t t-if="filters['defaultPartnerTagsValues']">
+                                    <p><t t-out="','.join([a['label'] for a in filters['defaultPartnerTagsValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+                        </div>
+
+                        <br></br>
+
+                        <table class="table py-fin-table">
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="text-center">Move #</th>
+                                    <th class="text-center">Due Date</th>
+                                    <th class="text-center">Journal</th>
+                                    <th class="text-center">Account</th>
+                                    <t t-foreach="ageing_bucket" t-as="b" t-key="b['name']">
+                                        <th style="text-align:right" scope="col"><t t-esc="ageing_bucket[b]['name']"/></th>
+                                    </t>
+                                    <th style="text-align:right" scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <t t-foreach="move_lines" t-as="line">
+                                <tr class="py-fin-table-main-tr">
+                                    <td colspan="4"><span><t t-esc="line['partner_name']"/></span></td>
+
+                                    <t t-foreach="ageing_bucket" t-as="b" t-key="b['name']">
+                                        <t t-set="bucket_value" t-value="line[ageing_bucket[b]['name']]"/>
+                                        <td align="right" t-att-class="('py-font-weight-100' if bucket_value == 0  else '')"><t t-esc="bucket_value" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    </t>
+                                    <td align="right" t-att-class="('py-font-weight-100' if line['total'] == 0  else '')"><t t-esc="line['total']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                </tr>
+                                <t t-if="line.get('id_list') and filters.get('include_details').get('selectedValue').get('value') == 'yes'">
+                                    <t t-foreach="get_sub_lines(wiz_id, line['id_list'], line['partner_id'])" t-as="sub_line">
+                                        <tr class="py-fin-table-sub-tr">
+                                            <td><t t-esc="sub_line['move_name']"/></td>
+                                            <td><t t-esc="sub_line['date']" t-options='{"widget": "date"}'/></td>
+                                            <td><t t-esc="sub_line['journal_code']"/></td>
+                                            <td><t t-esc="sub_line['account_code']"/></td>
+                                            <td class="py-td-amount" t-att-class="('py-td-amount py-font-weight-100' if sub_line['range_0'] == 0 else 'py-td-amount')"><t t-esc="sub_line['range_0']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                            <td class="py-td-amount" t-att-class="('py-td-amount py-font-weight-100' if sub_line['range_1'] == 0 else 'py-td-amount')"><t t-esc="sub_line['range_1']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                            <td class="py-td-amount" t-att-class="('py-td-amount py-font-weight-100' if sub_line['range_2'] == 0 else 'py-td-amount')"><t t-esc="sub_line['range_2']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                            <td class="py-td-amount" t-att-class="('py-td-amount py-font-weight-100' if sub_line['range_3'] == 0 else 'py-td-amount')"><t t-esc="sub_line['range_3']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                            <td class="py-td-amount" t-att-class="('py-td-amount py-font-weight-100' if sub_line['range_4'] == 0 else 'py-td-amount')"><t t-esc="sub_line['range_4']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                            <td class="py-td-amount" t-att-class="('py-td-amount py-font-weight-100' if sub_line['range_5'] == 0 else 'py-td-amount')"><t t-esc="sub_line['range_5']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                            <td class="py-td-amount" t-att-class="('py-td-amount py-font-weight-100' if sub_line['range_6'] == 0 else 'py-td-amount')"><t t-esc="sub_line['range_6']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </t>
+                        </table>
+                    </div>
+                    <br></br>
+                    <p style="text-align:center"> *** END OF DOCUMENT ***</p>
+                </div>
+           </t>
+        </t>
+    </template>
+
+    <record id="action_print_partner_ageing" model="ir.actions.report">
+        <field name="name">Print Ageing</field>
+        <field name="model">ins.partner.ageing</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_dynamic_reports.partner_ageing</field>
+        <field name="report_file">account_dynamic_reports.partner_ageing</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Partner Ageing As on - %s' % (object.as_on_date)</field>
+    </record>
+
+</odoo>

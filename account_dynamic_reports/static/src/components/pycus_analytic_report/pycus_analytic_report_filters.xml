@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <t t-name="account_dynamic_reports.PycusAnalyticReportFilters" t-inherit-mode="primary" t-inherit="account_dynamic_reports.PycusFilters">
+        <xpath expr="//div[@name='pycus-filter-sec-2-in-one']" position="inside">
+            <div class="col col-2">
+                <span>Include Details</span>
+            </div>
+            <div class="col col-4">
+                <SelectMenu t-props="{choices: state.include_details.choices,
+                          searchable: false,
+                          autoSort: false,
+                          class: 'pycus-filter-dropdown',
+                          togglerClass: 'your-toggler-class',
+                          required: true,
+                          value: state.include_details.selectedValue.value,
+                          searchPlaceholder: 'Include Details',
+                          onSelect: handleIncludeDetailsSelect,
+                          }"
+                />
+            </div>
+
+        </xpath>
+
+        <xpath expr="//div[@name='pycus-filter-sec-1-in-one']" position="inside">
+            <div class="row">
+                <div class="col col-2">
+                    <span>Plan</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'account.analytic.plan'"
+                        defaultValues="state.defaultPlanValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedPlans"
+                    />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-2">
+                    <span>Analytic Accounts</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'account.analytic.account'"
+                        defaultValues="state.defaultAnalyticValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedAnalytics"
+                    />
+                </div>
+            </div>
+        </xpath>
+    </t>
+</odoo>

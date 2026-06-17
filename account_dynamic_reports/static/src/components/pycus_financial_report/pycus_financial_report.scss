@@ -1,0 +1,145 @@
+.select2-container-multi {
+    min-width: 100%;
+    border: none !important;
+}
+
+.py-header {
+    background-color: white;
+}
+
+.py-date-range-container {
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Align items with space in between */
+    white-space: nowrap;
+    width: 300px;
+    padding: 10px;
+    input {
+        padding-left: 15px
+    }
+}
+
+.pycus-button-nav {
+    padding-left: 0px !important;
+    padding-right: 10px !important;
+}
+
+// Table //
+
+///////////////////////////// TESTED CSS /////////////////////////////////
+.custom-dropdown {
+    background-color: inherit;
+}
+
+.pycusFilterBox {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+}
+
+.py-fin-lines-container {
+    margin: 10px 150px 10px 150px;
+    border: 1px solid #e6e6e6;
+    padding: 27px;
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin; /* "auto" or "thin" */
+    scrollbar-color: rgba(155, 155, 155, 0.5) rgba(255, 255, 255, 0.5); /* thumb color track color */
+}
+
+.pycus-btn-download {
+    border: none;
+}
+
+.py-fin-data-table {
+    color: #374151;
+    font-size: 0.85rem;
+
+    .py-main-thead-tr {
+        th {
+            font-weight: 500;
+        }
+    }
+    .py-fin-main-tr {
+        //font-size: 0.9rem;
+        :hover {
+            cursor: pointer;
+        }
+        td:first-child {
+            width: 10px;
+        }
+    }
+
+    .py-tr-level-0 {
+        color: #374151;
+        font-weight: bold;
+        margin-top: 30px;
+        td {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
+
+    .py-tr-level-1 {
+        background-color: #d5d7db;
+        color: #374151;
+        font-weight: bold;
+        td {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
+
+    .py-tr-level-2 {
+        color: #374151;
+        font-weight: bold;
+        td {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
+
+    .py-tr-level-3, .py-tr-level-4, .py-tr-level-5, .py-tr-level-6, .py-tr-level-7{
+        color: #374151;
+        font-weight: normal;
+        td {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
+
+
+
+    .py-sub-tr:hover {
+        background-color: #f0f0f0;
+    }
+
+    .py-filter-box-invisible {
+        display: none;
+    }
+
+    .fa {
+      margin-right: 5px; /* Adjust this value as needed */
+    }
+}
+
+//////////// Loader ////////////////////
+
+#loading {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+}
+#loading-image {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  z-index: 100;
+}

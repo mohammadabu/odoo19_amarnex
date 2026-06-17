@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+    <t t-name="account_dynamic_reports.PycusDropdown">
+        <div t-att-class="pycus-filter_multi-dropdown" style="width: 100%;">
+            <SelectMenu t-props="{choices: state.choices,
+                              multiSelect: true,
+                              class: 'pycus-filter-dropdown',
+                              togglerClass: 'your-toggler-class',
+                              required: true,
+                              value: state.selectedValue.value,
+                              searchPlaceholder: state.placeholder,
+                              onSelect: handleSelect,
+                              onInput: handleSearch
+                              }"
+          />
+        </div>
+
+    </t>
+</template>

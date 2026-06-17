@@ -1,0 +1,46 @@
+.page-numbers {
+    text-align: end;
+
+    a {
+        border: 1px solid gray;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 7px;
+        padding-right: 7px;
+        border-radius: 3px;
+        background-color: bisque;
+        font-weight: bold;
+        margin:3px;
+        cursor: pointer;
+    }
+}
+
+.py-font-weight-500 {
+    td {
+        font-weight: 500;
+        background-color: #f9f9ff;
+    }
+}
+
+.py-sub-total {
+    border-top: 2px solid #c4c4c4;
+}
+
+.py-font-weight-100 {
+    font-weight: 100 !important;
+}
+
+.tr-hover {
+    background-color: #223344
+}
+
+.py-btn-link {
+  background-color: white;
+  color: #5f636f;
+  width: auto;
+  padding: 0 0.5rem;
+  margin: 0 0.5rem;
+  border: 1px solid #d8dadd;
+  border-radius: 0.25rem;
+  font-weight: 300;
+}

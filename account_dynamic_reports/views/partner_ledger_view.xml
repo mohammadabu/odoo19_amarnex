@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="partner_ledger">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <style>
+                        .py-fin-table {
+                            padding-top: 20px;
+                        }
+                        .py-th-amount {
+                            text-align: right;
+                        }
+                        .py-td-amount {
+                            text-align: right;
+                        }
+                        .py-fin-table-main-tr > td{
+                            font-weight: bold;
+                        }
+                        .py-fin-table-sub-tr > td:first-child {
+                            padding-left: 20px;
+                        }
+                    </style>
+                    <h3><span t-esc="res_company.name"/>: Partner ledger</h3>
+                    <t t-set="filters" t-value="get_filters(wiz_id)"/>
+                    <div>
+                        <div class="row mt32 pims_report_content">
+                            <div class="col-3">
+                                <strong>Display Partners</strong>
+                                <t t-set="k" t-value="filters['display_accounts']['selectedValue']['value']"/>
+                                <t t-foreach="filters['display_accounts']['choices']" t-as="choice">
+                                    <t t-if="choice['value'] == k">
+                                        <p t-esc="choice['label']"></p>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class="col-3">
+                                <strong>Date From</strong>
+                                <p t-esc="filters['date_from']" t-options='{"widget": "date"}'></p>
+                            </div>
+                            <div class="col-3">
+                                <strong>Date To</strong>
+                                <p t-esc="filters['date_to']" t-options='{"widget": "date"}'></p>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Journals</strong>
+                                <t t-if="filters['defaultJournalValues']">
+                                    <p><t t-out="','.join([a['code'] for a in filters['defaultJournalValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt32 pims_report_content">
+                            <div class="col-3">
+                                <strong>Accounts</strong>
+                                <t t-if="filters['defaultAccountValues']">
+                                    <p><t t-out="','.join([a['code'] for a in filters['defaultAccountValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Partners</strong>
+                                <t t-if="filters['defaultPartnerValues']">
+                                    <p><t t-out="','.join([a['label'] for a in filters['defaultPartnerValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Account Tags</strong>
+                                <t t-if="filters['defaultAccountTagValues']">
+                                    <p><t t-out="','.join([a['label'] for a in filters['defaultAccountTagValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br></br><br></br>
+
+                    <table class="table py-fin-table">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="text-center">Move #</th>
+                                <th class="text-center">Journal</th>
+                                <th class="text-center">Invoice Date</th>
+                                <th class="text-center">Due Date</th>
+                                <th class="text-center">Account</th>
+                                <th class="text-center">Matching</th>
+                                <th class="py-th-amount">Debit</th>
+                                <th class="py-th-amount">Credit</th>
+                                <th class="py-th-amount">Amount Currency</th>
+                                <th class="py-th-amount">Balance</th>
+                            </tr>
+                        </thead>
+                        <t t-foreach="get_main_lines(wiz_id)" t-as="line">
+                            <tr class="py-fin-table-main-tr">
+                                <td colspan="6"><span><t t-esc="line['partner_name']"/></span></td>
+                                <td class="py-td-amount"><t t-esc="line['debit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                <td class="py-td-amount"><t t-esc="line['credit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                <td class="py-td-amount"></td>
+                                <td class="py-td-amount"><t t-esc="line['balance']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                            </tr>
+
+                            <t t-foreach="get_sub_lines(wiz_id, line['id_list'], line['partner_id'])" t-as="sub_line">
+                                <t t-if="sub_line['ttype'] == 'initial'">
+                                    <tr class="py-fin-table-sub-tr">
+                                        <td colspan="2"></td>
+                                        <td colspan="4"><span>Initial Balance</span></td>
+                                        <td class="py-td-amount"><t t-esc="sub_line['debit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td class="py-td-amount"><t t-esc="sub_line['credit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td></td>
+                                        <td class="py-td-amount"><t t-esc="sub_line['balance']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    </tr>
+                                </t>
+                                <t t-if="sub_line['ttype'] == 'strict'">
+                                    <tr class="py-fin-table-sub-tr">
+                                        <td><t t-esc="sub_line['move_name']"/></td>
+                                        <td><t t-esc="sub_line['lcode']"/></td>
+                                        <td><t t-esc="sub_line['ldate']" t-options='{"widget": "date"}'/></td>
+                                        <td><t t-esc="sub_line['date_maturity']" t-options='{"widget": "date"}'/></td>
+                                        <td><t t-esc="sub_line['account_name']"/></td>
+                                        <td><t t-esc="sub_line['matching_number']"/></td>
+                                        <td class="py-td-amount"><t t-esc="sub_line['debit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td class="py-td-amount"><t t-esc="sub_line['credit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <t t-if="sub_line['amount_currency']">
+                                            <td class="py-td-amount"><t t-esc="sub_line['amount_currency']" t-options="{'widget': 'monetary', 'display_currency': get_foreign_currency(sub_line['currency_id'])}"/></td>
+                                        </t>
+                                        <t t-else="">
+                                            <td></td>
+                                        </t>
+                                        <td class="py-td-amount"><t t-esc="sub_line['balance']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    </tr>
+                                </t>
+                                <t t-if="sub_line['ttype'] == 'ending'">
+                                    <tr class="py-fin-table-sub-tr">
+                                        <td colspan="2"></td>
+                                        <td colspan="4"><span>Ending Balance</span></td>
+                                        <td class="py-td-amount"><t t-esc="sub_line['debit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td class="py-td-amount"><t t-esc="sub_line['credit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td></td>
+                                        <td class="py-td-amount"><t t-esc="sub_line['balance']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </t>
+                    </table>
+                    <br></br>
+                    <p style="text-align:center"> *** END OF DOCUMENT ***</p>
+                </div>
+           </t>
+        </t>
+    </template>
+
+    <record id="action_print_partner_ledger" model="ir.actions.report">
+        <field name="name">Print Partner Ledger</field>
+        <field name="model">ins.partner.ledger</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_dynamic_reports.partner_ledger</field>
+        <field name="report_file">account_dynamic_reports.partner_ledger</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Partner Ledger - %s / %s' % (object.date_from, object.date_to)</field>
+    </record>
+</odoo>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="analytic_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <style>
+                        .py-fin-table {
+                            padding-top: 20px;
+                        }
+                        .py-th-amount {
+                            text-align: right;
+                        }
+                        .py-td-amount {
+                            text-align: right;
+                        }
+                        .py-td-string {
+                            text-align: left;
+                        }
+                        .py-fin-table-main-tr > td{
+                            font-weight: bold;
+                        }
+                        .py-fin-table-sub-tr > td:first-child {
+                            padding-left: 20px;
+                        }
+                    </style>
+                    <h3><span t-esc="res_company.name"/>: Analytic Report</h3>
+                    <t t-set="filters" t-value="get_filters(wiz_id)"/>
+                    <div>
+                        <div class="row mt32 pims_report_content">
+                            <div class="col-3">
+                                <strong>Date From</strong>
+                                <p t-esc="filters['date_from']" t-options='{"widget": "date"}'></p>
+                            </div>
+                            <div class="col-3">
+                                <strong>Date To</strong>
+                                <p t-esc="filters['date_to']" t-options='{"widget": "date"}'></p>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Journals</strong>
+                                <t t-if="filters['defaultJournalValues']">
+                                    <p><t t-out="','.join([a['code'] for a in filters['defaultJournalValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt32 pims_report_content">
+                            <div class="col-3">
+                                <strong>Accounts</strong>
+                                <t t-if="filters['defaultAccountValues']">
+                                    <p><t t-out="','.join([a['code'] for a in filters['defaultAccountValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Partners</strong>
+                                <t t-if="filters['defaultPartnerValues']">
+                                    <p><t t-out="','.join([a['label'] for a in filters['defaultPartnerValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Include Details</strong>
+                                <p><t t-out="filters['include_details']['selectedValue']['value']"/></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br></br><br></br>
+
+                    <table class="table py-fin-table">
+                        <thead>
+                            <tr class="text-left">
+                                <th class="py-td-string">Date</th>
+                                <th class="py-td-string">Partner</th>
+                                <th class="py-td-string">Journal</th>
+                                <th class="py-td-string">Account</th>
+                                <th class="py-td-string">Plan</th>
+                                <th class="py-td-string">Product</th>
+                                <th class="py-th-amount">Amount</th>
+                            </tr>
+                        </thead>
+                        <t t-foreach="get_main_lines(wiz_id)" t-as="line">
+                            <tr class="py-fin-table-main-tr">
+                                <td class="py-td-string" colspan="6"><span><t t-esc="line['analytic_code']"/> - <t t-esc="line['analytic_name']"/></span></td>
+                                <td class="py-td-amount"><t t-esc="line['amount']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                            </tr>
+                            <t t-if="filters['include_details']['selectedValue']['value'] == 'yes'">
+                                <t t-foreach="get_sub_lines(wiz_id, line['id_list'], line['analytic_id'])" t-as="sub_line">
+                                    <tr class="py-fin-table-sub-tr">
+                                        <td class="py-td-string"><t t-esc="sub_line['date']" t-options='{"widget": "date"}'/></td>
+                                        <td class="py-td-string"><t t-esc="sub_line['partner_name']"/></td>
+                                        <td class="py-td-string"><t t-esc="sub_line['journal_code']"/></td>
+                                        <td class="py-td-string"><t t-esc="sub_line['account_name']"/></td>
+                                        <td class="py-td-string"><t t-esc="sub_line['plan']"/></td>
+                                        <td class="py-td-string"><t t-esc="sub_line['product']"/></td>
+                                        <td class="py-td-amount"><t t-esc="sub_line['amount']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </t>
+                    </table>
+                    <br></br>
+                    <p style="text-align:center"> *** END OF DOCUMENT ***</p>
+                </div>
+           </t>
+        </t>
+    </template>
+
+    <record id="action_print_analytic_report" model="ir.actions.report">
+        <field name="name">Print Analytic Report</field>
+        <field name="model">ins.analytic.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_dynamic_reports.analytic_report</field>
+        <field name="report_file">account_dynamic_reports.analytic_report</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Analytic Report - %s / %s' % (object.date_from, object.date_to)</field>
+    </record>
+</odoo>

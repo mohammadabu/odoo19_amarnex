@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+
+    <t t-name="account_dynamic_reports.trialBalanceLine">
+        <tr class="py-main-tr" t-attf-id="main_move_line_{state.account_line.id}"
+            t-on-click="()=>onGlLineClicked(this)"
+            t-att-class="(state.account_line.account_code === 'Total' ? 'py-sub-total py-font-weight-500' : '')"
+              >
+                <td colspan="2" style="background-color: #f4fcff;"
+                    t-on-mouseover="(ev) => this.handleHover(ev, true)"
+                    t-on-mouseout="(ev) => this.handleHover(ev, false)">
+
+                    <div>
+                        <t t-esc="state.account_line.account_code"/> <t t-esc="state.account_line.account_name"/>
+                        <button t-if="state.viewGlVisibility &amp;&amp; state.account_line.id_list &amp;&amp; state.account_line.id_list.length > 0"
+                                t-on-click="(ev) => this.viewGlLinesAction(ev, state.account_line.id_list)"
+                                class="btn btn_action py-btn-link">Journal Items</button>
+                    </div>
+                </td>
+                <td align="right" t-att-class="(!state.account_line.initial_debit ? 'aaa py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(state.account_line.initial_debit)"/></td>
+                <td align="right" t-att-class="(!state.account_line.initial_credit ? 'py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(state.account_line.initial_credit)"/></td>
+                <td align="right" t-if="state.filterValues.comparison_range_string" t-att-class="(!state.account_line.comparison_debit  ? 'py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(state.account_line.comparison_debit)"/></td>
+                <td align="right" t-if="state.filterValues.comparison_range_string" t-att-class="(!state.account_line.comparison_credit ? 'py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(state.account_line.comparison_credit)"/></td>
+                <td align="right" t-att-class="(!state.account_line.debit ? 'py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(state.account_line.debit)"/></td>
+                <td align="right" t-att-class="(!state.account_line.credit ? 'py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(state.account_line.credit)"/></td>
+                <td align="right" t-att-class="(!state.account_line.ending_debit ? 'py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(state.account_line.ending_debit)"/></td>
+                <td align="right" t-att-class="(!state.account_line.ending_credit ? 'py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(state.account_line.ending_credit)"/></td>
+        </tr>
+
+    </t>
+
+</template>

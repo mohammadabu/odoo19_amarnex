@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <t t-name="account_dynamic_reports.PycusPartnerLedgerFilters" t-inherit-mode="primary" t-inherit="account_dynamic_reports.PycusFilters">
+        <xpath expr="//div[@name='pycus-filter-sec-2-in-one']" position="inside">
+            <div class="col col-2">
+                <span>Target Moves</span>
+            </div>
+            <div class="col col-4">
+                <SelectMenu t-props="{choices: state.target_moves.choices,
+                          searchable: false,
+                          autoSort: false,
+                          class: 'pycus-filter-dropdown',
+                          togglerClass: 'your-toggler-class',
+                          required: true,
+                          value: state.target_moves.selectedValue.value,
+                          searchPlaceholder: 'Target Moves',
+                          onSelect: handleTargetMovesSelect,
+                          }"
+                />
+            </div>
+            <div class="col col-2">
+                <span>Display Partners</span>
+            </div>
+            <div class="col col-4">
+                <SelectMenu t-props="{choices: state.display_accounts.choices,
+                          searchable: false,
+                          autoSort: false,
+                          class: 'pycus-filter-dropdown',
+                          togglerClass: 'your-toggler-class',
+                          required: true,
+                          value: state.display_accounts.selectedValue.value,
+                          searchPlaceholder: 'Display Accounts',
+                          onSelect: handleDisplayAccountsSelect,
+                          }"
+                />
+            </div>
+
+            <div class="col col-2">
+                <span>Include Initial Balance</span>
+            </div>
+            <div class="col col-4">
+                <SelectMenu t-props="{choices: state.include_initial_balance.choices,
+                          searchable: false,
+                          autoSort: false,
+                          class: 'pycus-filter-dropdown',
+                          togglerClass: 'your-toggler-class',
+                          required: true,
+                          value: state.include_initial_balance.selectedValue.value,
+                          searchPlaceholder: 'Include Initial Balance',
+                          onSelect: handleInitialBalanceSelect,
+                          }"
+                />
+            </div>
+
+            <div class="col col-2">
+                <span>Reconciled</span>
+            </div>
+            <div class="col col-4">
+                <SelectMenu t-props="{choices: state.reconciled.choices,
+                          searchable: false,
+                          autoSort: false,
+                          class: 'pycus-filter-dropdown',
+                          togglerClass: 'your-toggler-class',
+                          required: true,
+                          value: state.reconciled.selectedValue.value,
+                          searchPlaceholder: 'Reconciled',
+                          onSelect: handleReconciledSelect,
+                          }"
+                />
+            </div>
+
+            <div class="col col-2">
+                <span>Account Type</span>
+            </div>
+            <div class="col col-4">
+                <SelectMenu t-props="{choices: state.account_type.choices,
+                          searchable: false,
+                          autoSort: false,
+                          class: 'pycus-filter-dropdown',
+                          togglerClass: 'your-toggler-class',
+                          required: true,
+                          value: state.account_type.selectedValue.value,
+                          searchPlaceholder: 'Account Type',
+                          onSelect: handleAccountTypeSelect,
+                          }"
+                />
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='pycus-filter-sec-1-in-one']" position="inside">
+            <div class="row">
+                <div class="col col-2">
+                    <span>Partner Tags</span>
+                </div>
+                <div class="col col-10">
+                    <PycusDropdown
+                        class="'pycus-filter-dropdown'"
+                        tableName="'res.partner.category'"
+                        defaultValues="state.defaultPartnerTagsValues"
+                        placeholder="'Search Here...'"
+                        updateToParent.bind="selectedPartnerTags"
+                    />
+                </div>
+            </div>
+        </xpath>
+    </t>
+</odoo>

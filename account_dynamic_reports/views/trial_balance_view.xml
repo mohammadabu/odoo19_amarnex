@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="trial_balance">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <style>
+                        .py-fin-table {
+                            padding-top: 20px;
+                            width: 100%;
+                        }
+                        .py-fin-table th {
+                            font-weight: bold !important;
+                            border: 1px solid #c9c7c7;
+                            color: black;
+                        }
+                        .py-fin-table td {
+                            padding-right: 15px;
+                        }
+
+                        .py-th-amount {
+                            text-align: right;
+                        }
+
+                        .py-td-amount {
+                            text-align: right;
+                        }
+                        .py-fin-table-sub-tr > td:first-child {
+                            padding-left: 20px;
+                        }
+                        .py-section-background {
+                            background: #F9FAFB;
+                            //border-right: 1px solid;
+                            //border-left: 1px solid;
+                        }
+                        .py-font-weight-500 {
+                            font-weight: bold;
+                        }
+                        .py-font-weight-100 {
+                            font-weight: 100;
+                            opacity: 0.5;
+                        }
+                    </style>
+                    <h3><span t-esc="res_company.name"/>: Trial Balance</h3>
+                    <t t-set="filters" t-value="get_filters(wiz_id)"/>
+                    <div>
+                        <div class="row mt32 pims_report_content">
+                            <div class="col-3">
+                                <strong>Display Account</strong>
+                                <t t-set="k" t-value="filters['display_accounts']['selectedValue']['value']"/>
+                                <t t-foreach="filters['display_accounts']['choices']" t-as="choice">
+                                    <t t-if="choice['value'] == k">
+                                        <p t-esc="choice['label']"></p>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class="col-3">
+                                <strong>Date From</strong>
+                                <p t-esc="filters['date_from']" t-options='{"widget": "date"}'></p>
+                            </div>
+                            <div class="col-3">
+                                <strong>Date To</strong>
+                                <p t-esc="filters['date_to']" t-options='{"widget": "date"}'></p>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Journals</strong>
+                                <t t-if="filters['defaultJournalValues']">
+                                    <p><t t-out="','.join([a['code'] for a in filters['defaultJournalValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt32 pims_report_content">
+                            <div class="col-3">
+                                <strong>Accounts</strong>
+                                <t t-if="filters['defaultAccountValues']">
+                                    <p><t t-out="','.join([a['code'] for a in filters['defaultAccountValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Partners</strong>
+                                <t t-if="filters['defaultPartnerValues']">
+                                    <p><t t-out="','.join([a['label'] for a in filters['defaultPartnerValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Account Tags</strong>
+                                <t t-if="filters['defaultAccountTagValues']">
+                                    <p><t t-out="','.join([a['label'] for a in filters['defaultAccountTagValues']])"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p>All</p>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br></br><br></br>
+
+                    <table class="py-fin-table">
+                        <thead>
+                            <tr>
+                                <th colspan="1"></th>
+                                <th colspan="2">Initial Balance</th>
+                                <th colspan="2" t-if="filters['comparison_range_string']"><t t-esc="filters['comparison_range_string']"/></th>
+                                <th colspan="2"><t t-esc="filters['current_range_string']"/></th>
+                                <th colspan="2">Ending Balance</th>
+                            </tr>
+                            <tr class="text-center">
+                                <th class="text-center"></th>
+                                <th class="text-center py-section-background">Debit</th>
+                                <th class="text-center py-section-background">Credit</th>
+                                <th class="text-center" t-if="filters['comparison_range_string']">Debit</th>
+                                <th class="text-center" t-if="filters['comparison_range_string']">Credit</th>
+                                <th class="text-center">Debit</th>
+                                <th class="text-center ">Credit</th>
+                                <th class="text-center py-section-background">Debit</th>
+                                <th class="text-center py-section-background">Credit</th>
+                            </tr>
+                        </thead>
+                        <t t-foreach="get_main_lines(wiz_id)" t-as="line">
+                            <tr class="py-fin-table-main-tr"
+                                t-att-class="'py-font-weight-500' if line['account_code'] == 'Total' else ''">
+                                <td colspan="1"><span><t t-esc="line['account_code']"/> - <t t-esc="line['account_name']"/></span></td>
+                                <td
+                                    t-att-class="'py-td-amount py-section-background py-font-weight-100' if line['initial_debit'] == 0 else 'py-td-amount py-section-background'">
+                                    <t t-esc="line['initial_debit'] or 0" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                                <td
+                                    t-att-class="'py-td-amount py-section-background py-font-weight-100' if line['initial_credit'] == 0 else 'py-td-amount py-section-background'">
+                                    <t t-esc="line['initial_credit'] or 0" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                                <td t-if="filters['comparison_range_string']"
+                                    t-att-class="'py-td-amount py-font-weight-100' if line['comparison_debit'] == 0 else 'py-td-amount'">
+                                    <t t-esc="line['comparison_debit'] or 0" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                                <td t-if="filters['comparison_range_string']"
+                                    t-att-class="'py-td-amount py-font-weight-100' if line['comparison_credit'] == 0 else 'py-td-amount'">
+                                    <t t-esc="line['comparison_credit'] or 0" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                                <td
+                                    t-att-class="'py-td-amount py-font-weight-100' if line['debit'] == 0 else 'py-td-amount'">
+                                    <t t-esc="line['debit'] or 0" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                                <td
+                                    t-att-class="'py-td-amount py-font-weight-100' if line['credit'] == 0 else 'py-td-amount'">
+                                    <t t-esc="line['credit'] or 0" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                                <td
+                                    t-att-class="'py-td-amount py-section-background py-font-weight-100' if line['ending_debit'] == 0 else 'py-td-amount py-section-background'">
+                                    <t t-esc="line['ending_debit'] or 0" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                                <td
+                                    t-att-class="'py-td-amount py-section-background py-font-weight-100' if line['ending_credit'] == 0 else 'py-td-amount py-section-background'">
+                                    <t t-esc="line['ending_credit'] or 0" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                    <br></br>
+                    <p style="text-align:center"> *** END OF DOCUMENT ***</p>
+                </div>
+           </t>
+        </t>
+    </template>
+
+    <record id="action_print_trial_balance" model="ir.actions.report">
+        <field name="name">Print TB</field>
+        <field name="model">ins.trial.balance</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_dynamic_reports.trial_balance</field>
+        <field name="report_file">account_dynamic_reports.trial_balance</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Trial Balance - %s / %s' % (object.date_from, object.date_to)</field>
+    </record>
+</odoo>

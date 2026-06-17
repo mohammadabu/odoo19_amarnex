@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+
+    <t t-name="account_dynamic_reports.financialReport" owl="1">
+        <div class="py-header">
+            <nav class="navbar navbar-expand-lg bg-white">
+              <div class="container-fluid">
+                <div class="d-flex">
+                    <a class="navbar-brand" href="#"><strong>
+                        <t t-if="state.filterValues.report_name == 'Net Profit'">
+                            Profit and Loss
+                        </t>
+                        <t t-else="">
+                            <t t-esc="state.filterValues.report_name"/>
+                        </t>
+                    </strong></a>
+                </div>
+                <div class="d-flex">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+                        <li class="nav-item">
+                            <button t-on-click="toggleVisibility" class="btn btn-secondary dropdown-toggle custom-dropdown">
+                                <span class="fa fa-filter"></span>
+                                Filters
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-flex">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+
+                    <li class="nav-item pycus-button-nav">
+                        <button t-on-click="downloadXlsx" class="btn btn-secondary custom-dropdown">
+                            <span class="fa fa-download"></span>
+                            Xlsx
+                        </button>
+                    </li>
+
+                      <li class="nav-item pycus-button-nav">
+                        <button t-on-click="downloadPdf" class="btn btn-secondary custom-dropdown">
+                            <span class="fa fa-download"></span>
+                            Pdf
+                        </button>
+                    </li>
+
+                  </ul>
+                  <button class="btn btn-outline-success" t-on-click="apply_filters" type="submit">Apply</button>
+                </div>
+              </div>
+            </nav>
+            <hr class="my-1"/>
+        </div>
+
+        <div class="pycusFilterBox" t-if="state.isFilterVisible">
+            <PycusFinancialReportFilters filterValues="state.filterValues" updateValues.bind="getFilterValues"/>
+        </div>
+
+        <div id="loading" t-if="state.showLoader">
+            <img id="loading-image" src="account_dynamic_reports/static/src/img/Spinner-2.gif" alt="Loading..." />
+        </div>
+
+        <div class="py-fin-lines-container bg-white">
+            <table class="table py-fin-data-table">
+                <thead>
+                  <tr class="py-main-thead-tr">
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                      <th style="text-align: right;" scope="col" t-if="state.filterValues.comparison_range_string"><t t-esc="state.filterValues.comparison_range_string"/></th>
+                      <th style="text-align: right;" scope="col"><t t-esc="state.filterValues.current_range_string"/></th>
+                      <th style="text-align: right;" scope="col" t-if="state.filterValues.comparison_range_string">%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <t t-if="state.gl_lines.length > 0">
+                        <t t-foreach="state.gl_lines" t-as="line" t-key="line.time_string">
+                            <tr class="spacer" t-if="line.level == 1"><td colspan="2"></td></tr>
+                            <tr t-att-class="line.class" data-bs-toggle="collapse" t-att-data-bs-target="'.a'+line.self_id">
+                                <td>
+                                    <i class="fa fa-caret-right" t-if="line.fin_report_type == 'account_type' and line.display_detail != 'no_detail'"/>
+                                </td>
+                                <td t-att-style="'padding-left: ' + (line.level * 10) + 'px'">
+                                    <div>
+                                        <t t-esc="line.name"/>
+                                        <t t-if="line.type == 'account'">
+                                            <button
+                                                t-on-click="(ev) => this.viewGl(ev, line.account, line.range_selection)"
+                                                class="btn btn_action py-btn-link">General Ledger</button>
+                                        </t>
+                                    </div>
+                                </td>
+                                <td align="right" t-if="state.filterValues.comparison_range_string" t-att-class="(line.comparison_balance == 0 ? 'py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(line.comparison_balance, line.company_currency_id)"/></td>
+                                <td align="right" t-att-class="(line.balance == 0 ? 'py-font-weight-100' : '')"><t t-esc="this.formatFieldMonetary(line.balance, line.company_currency_id)"/></td>
+                                <td align="right" t-if="state.filterValues.comparison_range_string" t-att-class="(line.percentage_change == 0 ? 'py-font-weight-100' : '')"><t t-esc="line.percentage_change"/>%</td>
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <tr>
+                            <td colspan="6">
+                                <p style="text-align: center">No data found!!!</p>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+
+    </t>
+</template>

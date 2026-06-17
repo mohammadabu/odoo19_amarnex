@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+
+    <t t-name="account_dynamic_reports.generalLedger" owl="1">
+        <div class="py-header">
+            <nav class="navbar navbar-expand-lg bg-white">
+              <div class="container-fluid">
+                <div class="d-flex">
+                    <a class="navbar-brand" href="#"><strong>General Ledger</strong></a>
+                </div>
+                <div class="d-flex">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+                        <li class="nav-item">
+                            <button t-on-click="toggleVisibility" class="btn btn-secondary dropdown-toggle custom-dropdown">
+                                <span class="fa fa-filter"></span>
+                                Filters
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-flex">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+
+                    <li class="nav-item pycus-button-nav">
+                        <button t-on-click="downloadXlsx" class="btn btn-secondary custom-dropdown">
+                            <span class="fa fa-download"></span>
+                            Xlsx
+                        </button>
+                    </li>
+
+                      <li class="nav-item pycus-button-nav">
+                        <button t-on-click="downloadPdf" class="btn btn-secondary custom-dropdown">
+                            <span class="fa fa-download"></span>
+                            Pdf
+                        </button>
+                    </li>
+
+                  </ul>
+                  <button class="btn btn-outline-success" t-on-click="apply_filters" type="submit">Apply</button>
+                </div>
+              </div>
+            </nav>
+            <hr class="my-1"/>
+        </div>
+
+        <div class="pycusFilterBox" t-if="state.isFilterVisible">
+            <PycusGeneralLedgerFilters filterValues="state.filterValues" updateValues.bind="getFilterValues"/>
+        </div>
+
+        <div id="loading" t-if="state.showLoader">
+            <img id="loading-image" src="account_dynamic_reports/static/src/img/Spinner-2.gif" alt="Loading..." />
+        </div>
+
+        <div class="py-gl-lines-container bg-white">
+            <table class="table py-data-table">
+                <thead>
+                  <tr class="py-main-thead-tr">
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">Invoice Date</th>
+                    <th scope="col">Communication</th>
+                    <th scope="col">Partner</th>
+                    <th style="text-align:right" scope="col">Debit</th>
+                    <th style="text-align:right" scope="col">Credit</th>
+                    <th style="text-align:right" scope="col">Balance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <t t-if="state.gl_lines.length > 0">
+                        <t t-foreach="state.gl_lines" t-as="line" t-key="line.time_string">
+                            <PycusGeneralLedgerLine gl_line="line" filterValues="state.filterValues" activeId="state.activeId"/>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <tr>
+                            <td colspan="6">
+                                <p style="text-align: center">No matching data found!!!</p>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+
+    </t>
+</template>

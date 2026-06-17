@@ -1,0 +1,76 @@
+<odoo>
+    <data>
+
+        <record id="ins_analytic_report_wizard" model="ir.ui.view">
+            <field name="name">ins.analytic.report.view</field>
+            <field name="model">ins.analytic.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="date_range"/>
+                            <field name="company_id" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="financial_year" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="account_ids" widget="many2many_tags"
+                               
+                                options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                        <field name="journal_ids" widget="many2many_tags"
+                               domain="[('company_id','=',company_id)]"
+                                options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                        <field name="plan_ids" widget="many2many_tags"
+                                options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                        <field name="analytic_ids" widget="many2many_tags"
+                               domain="[('company_id','=',company_id)]"
+                                options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                        <field name="partner_ids" widget="many2many_tags"
+                               domain="[('parent_id','=', False),'|',('company_id','=',company_id),('company_id','=',False)]"
+                                options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                    </group>
+                    <footer>
+                        <button name="action_pdf" type="object" string="PDF" class="oe_highlight"/>
+                        <button name="action_xlsx" type="object" string="XLSX" class="oe_highlight"/>
+                        <button name="action_view" type="object" string="VIEW" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ins_analytic_report_wizard" model="ir.actions.act_window">
+            <field name="name">Analytic Report</field>
+            <field name="res_model">ins.analytic.report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ins_analytic_report_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="action_dynamic_allinone_analytic_report" model="ir.actions.client">
+            <field name="name">Analytic Report</field>
+            <field name="tag">account_dynamic_reports.action_analytic_report</field>
+        </record>
+
+<!--        <menuitem id="account_report_analytic" sequence="10" action="action_ins_analytic_report_wizard"-->
+<!--                  name="Analytic Report" parent="account_reports_ins" groups="account.group_account_user"/>-->
+
+        <menuitem id="account_report_analytic_wiz" sequence="10" action="action_dynamic_allinone_analytic_report"
+                  name="Analytic Report" parent="account_reports_ins_wiz" groups="account.group_account_user"/>
+
+
+        <record id="action_ins_analytic_report_xlsx" model="ir.actions.act_window">
+            <field name="name">Excel</field>
+            <field name="res_model">ins.analytic.report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

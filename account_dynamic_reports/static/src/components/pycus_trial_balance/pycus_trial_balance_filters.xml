@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <t t-name="account_dynamic_reports.PycusTrialBalanceFilters" t-inherit-mode="primary" t-inherit="account_dynamic_reports.PycusFilters">
+        <xpath expr="//div[@name='pycus-filter-sec-2-in-one']" position="inside">
+            <div class="col col-2">
+                <span>Target Moves</span>
+            </div>
+            <div class="col col-4">
+                <SelectMenu t-props="{choices: state.target_moves.choices,
+                          searchable: false,
+                          autoSort: false,
+                          class: 'pycus-filter-dropdown',
+                          togglerClass: 'your-toggler-class',
+                          required: true,
+                          value: state.target_moves.selectedValue.value,
+                          searchPlaceholder: 'Target Moves',
+                          onSelect: handleTargetMovesSelect,
+                          }"
+                />
+            </div>
+            <div class="col col-2">
+                <span>Display Accounts</span>
+            </div>
+            <div class="col col-4">
+                <SelectMenu t-props="{choices: state.display_accounts.choices,
+                          searchable: false,
+                          autoSort: false,
+                          class: 'pycus-filter-dropdown',
+                          togglerClass: 'your-toggler-class',
+                          required: true,
+                          value: state.display_accounts.selectedValue.value,
+                          searchPlaceholder: 'Display Accounts',
+                          onSelect: handleDisplayAccountsSelect,
+                          }"
+                />
+            </div>
+
+            <div class="col col-2">
+                <span>Compare Date Range</span>
+            </div>
+            <div class="col col-4">
+                <SelectMenu t-props="{choices: state.comparison_date_range.choices,
+                          searchable: false,
+                          autoSort: false,
+                          class: 'pycus-filter-dropdown',
+                          togglerClass: 'your-toggler-class',
+                          required: false,
+                          value: state.comparison_date_range.selectedValue.value,
+                          searchPlaceholder: 'Comparison Date Range',
+                          onSelect: handleComparisonDateRangeSelect,
+                          }"
+                />
+            </div>
+
+            <div class="col col-2">
+                <span>Compare Date From</span>
+            </div>
+            <div class="col col-4">
+                <DateTimeInput
+                      id="comparisonDateFrom"
+                      value="state.comparison_date_from"
+                      type="'date'"
+                      placeholder="fromPlaceholder"
+                      onChange.bind="onComparisonDateFromChanged"
+                />
+            </div>
+            <div class="col col-2">
+                <span>Compare Date To</span>
+            </div>
+            <div class="col col-4">
+                <DateTimeInput
+                      id="comparisonDateTo"
+                      value="state.comparison_date_to"
+                      type="'date'"
+                      placeholder="toPlaceholder"
+                      onChange.bind="onComparisonDateToChanged"
+                />
+            </div>
+
+        </xpath>
+
+<!--        <xpath expr="//div[@name='pycus-filter-sec-1-in-one']" position="inside">-->
+<!--            <div class="row">-->
+<!--                <div class="col col-2">-->
+<!--                    <span>Companies</span>-->
+<!--                </div>-->
+<!--                <div class="col col-10">-->
+<!--                    <PycusDropdown-->
+<!--                        class="'pycus-filter-dropdown'"-->
+<!--                        tableName="'res.company'"-->
+<!--                        defaultValues="state.defaultCompanyValues"-->
+<!--                        placeholder="'Search Here...'"-->
+<!--                        updateToParent.bind="selectedCompanies"-->
+<!--                    />-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </xpath>-->
+    </t>
+</odoo>
