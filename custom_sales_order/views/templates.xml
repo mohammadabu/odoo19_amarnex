@@ -128,8 +128,8 @@
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td t-if="display_discount" style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
-                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">Total</td>
-                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">
+                            <td style="font-size: 14px !important;font-weight: 800 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">Total</td>
+                            <td style="font-size: 14px !important;font-weight: 800 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">
                                 <span t-field="doc.amount_total" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                             </td>
                         </tr>
