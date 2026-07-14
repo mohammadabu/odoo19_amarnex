@@ -105,7 +105,7 @@
                                 </td>
 
                                 <td t-if="display_discount" style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
-                                    <span class="text-nowrap" t-if="line.display_type != 'line_section'" t-field="line.discount" />
+                                    <span class="text-nowrap" t-if="line.display_type != 'line_section'" t-field="line.discount" /> <span t-if="line.discount" >%</span>
                                 </td>
 
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
