@@ -91,21 +91,21 @@
 
 
 
-                            <tr t-if="not is_note" t-att-style="'background-color:white;' if (row_num % 2) != 0 else 'background-color:#baccef;' " >
+                            <tr t-if="not is_note" t-att-style="'background-color:gray;' if line.display_type == 'line_section' else ('background-color:white;' if (row_num % 2) != 0 else 'background-color:#baccef;')" >
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name">
                                     <span t-if="line.display_type == 'line_section'" t-field="line.name"  style="font-weight: 700 !important;"/>
                                     <span t-else="" t-field="line.name" t-options="{'widget': 'text'}"/>
                                 </td>
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-center">      
-                                    <span t-field="line.product_uom_qty"/>
+                                    <span t-if="line.display_type != 'line_section'" t-field="line.product_uom_qty"/>
                                 </td>
-                                <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right"><span t-field="line.price_unit"/></td>
+                                <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right"><span  t-if="line.display_type != 'line_section'" t-field="line.price_unit"/></td>
                                 <td style="font-size: 14px !important;font-weight: 800 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right">
-                                    <span style="" t-out="', '.join(t.tax_label or t.name for t in line.tax_ids)"/>
+                                    <span style="" t-if="line.display_type != 'line_section'" t-out="', '.join(t.tax_label or t.name for t in line.tax_ids)"/>
                                 </td>
 
                                 <td t-if="display_discount" style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
-                                    <span class="text-nowrap" t-field="line.discount" />
+                                    <span class="text-nowrap" t-if="line.display_type != 'line_section'" t-field="line.discount" />
                                 </td>
 
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
