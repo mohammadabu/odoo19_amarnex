@@ -91,7 +91,7 @@
 
 
 
-                            <tr t-if="not is_note" t-att-style="'background-color:gray;' if line.display_type == 'line_section' else ('background-color:white;' if (row_num % 2) != 0 else 'background-color:#baccef;')" >
+                            <tr t-if="not is_note" t-att-style="'background-color:#E2DDE1;' if line.display_type == 'line_section' else ('background-color:white;' if (row_num % 2) != 0 else 'background-color:#baccef;')" >
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name">
                                     <span t-if="line.display_type == 'line_section'" t-field="line.name"  style="font-weight: 700 !important;"/>
                                     <span t-else="" t-field="line.name" t-options="{'widget': 'text'}"/>
