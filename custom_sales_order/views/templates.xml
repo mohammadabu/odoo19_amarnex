@@ -92,7 +92,10 @@
 
 
                             <tr t-if="not is_note" t-att-style="'background-color:white;' if (row_num % 2) != 0 else 'background-color:#baccef;' " >
-                                <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+                                <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name">
+                                    <span t-if="line.display_type == 'line_section'" t-field="line.name"  style="font-weight: 700 !important;"/>
+                                    <span t-else="" t-field="line.name" t-options="{'widget': 'text'}"/>
+                                </td>
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-center">      
                                     <span t-field="line.product_uom_qty"/>
                                 </td>
@@ -106,7 +109,14 @@
                                 </td>
 
                                 <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right o_price_total">
-                                    <span class="text-nowrap" t-field="line.price_total" />
+                                    <span
+                                        t-if="line.display_type == 'line_section'"
+                                        name="price_subtotal_section"
+                                        t-out="line._get_section_totals(price_field)"
+                                        class="text-nowrap"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"
+                                    />
+                                    <span t-else="" class="text-nowrap" t-field="line.price_total" />
                                 </td>
                             </tr>
                             <tr t-elif="is_note" name="tr_note" class="fst-italic o_line_note" t-att-style="'background-color:white;' if (row_num % 2) != 0 else 'background-color:#baccef;' ">
