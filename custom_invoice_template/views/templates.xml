@@ -244,7 +244,17 @@
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">Subtotal</td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span t-field="o.amount_untaxed"/></td>
                         </tr>
-                        <tr t-att-style="'background-color:white;' if ((row_num + 2) % 2) != 0 else 'background-color:#baccef;' " >
+                        <t t-set="show_tax" t-value="not o.currency_id.is_zero(o.amount_tax)"/>
+                        <t t-set="tax_names" t-value="', '.join(t.tax_label or t.name for t in o.invoice_line_ids.mapped('tax_ids'))"/>
+                        <tr t-if="show_tax" t-att-style="'background-color:white;' if ((row_num + 2) % 2) != 0 else 'background-color:#baccef;' " >
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span t-out="tax_names or 'Tax'"/></td>
+                            <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span t-field="o.amount_tax"/></td>
+                        </tr>
+                        <tr t-att-style="'background-color:white;' if ((row_num + 2 + (1 if show_tax else 0)) % 2) != 0 else 'background-color:#baccef;' " >
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
@@ -257,7 +267,7 @@
                         <t t-foreach="payments_vals" t-as="payment_vals">
                             <t t-set="total_payment" t-value="total_payment + payment_vals['amount']"/>
                         </t> 
-                        <tr t-att-style="'background-color:white;' if ((row_num + 3) % 2) != 0 else 'background-color:#baccef;' " >
+                        <tr t-att-style="'background-color:white;' if ((row_num + 3 + (1 if show_tax else 0)) % 2) != 0 else 'background-color:#baccef;' " >
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
@@ -265,7 +275,7 @@
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name">Paid</td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-right" name="account_invoice_line_name"><span t-esc="total_payment" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                         </tr> 
-                        <tr t-att-style="'background-color:white;' if ((row_num + 4) % 2) != 0 else 'background-color:#baccef;' " >
+                        <tr t-att-style="'background-color:white;' if ((row_num + 4 + (1 if show_tax else 0)) % 2) != 0 else 'background-color:#baccef;' " >
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
                             <td style="font-size: 14px !important;font-weight: 500 !important;color: #3f3a3a !important;padding: 10px !important;" class="text-left" name="account_invoice_line_name"></td>
