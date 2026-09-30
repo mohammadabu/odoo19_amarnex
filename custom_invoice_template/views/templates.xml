@@ -292,7 +292,7 @@
                 <div style="width:100%font-size:13px;color:#555;margin-bottom: 70px !important;">
                     <div style="background:#f2f2f2; padding:15px;">
                         <!-- <div style="font-weight:bold; margin-bottom:6px;">Cheques Payment</div> -->
-                        <span t-raw="o.company_id.company_terms" />
+                        <!-- <span t-raw="o.company_id.company_terms" /> -->
                         <div style="margin-top:15px;" class="row">
                             <div style="width:50%;">
                                 <div style="font-weight:bold;">Beneficiary Name (English)</div>
